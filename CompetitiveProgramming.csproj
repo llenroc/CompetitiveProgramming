@@ -116,16 +116,46 @@
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane+Tree.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectEuler\15. Lattice paths.cs" />
+    <Compile Include="ProjectEuler\14. Longest Collatz sequence.cs" />
+    <Compile Include="ProjectEuler\13. Large sum.cs" />
+    <Compile Include="ProjectEuler\12. Highly divisible triangular number.cs" />
+    <Compile Include="ProjectEuler\11. Largest product in a grid.cs" />
+    <Compile Include="ProjectEuler\10. Summation of primes.cs" />
+    <Compile Include="ProjectEuler\9. Special Pythagorean triplet.cs" />
+    <Compile Include="ProjectEuler\8. Largest product in a series.cs" />
+    <Compile Include="ProjectEuler\2. Even Fibonacci numbers.cs" />
+    <Compile Include="ProjectEuler\3. Largest prime factor.cs" />
+    <Compile Include="ProjectEuler\4. Largest palindrome product.cs" />
+    <Compile Include="ProjectEuler\5. Smallest multiple.cs" />
+    <Compile Include="ProjectEuler\7. 10001st prime.cs" />
+    <Compile Include="ProjectEuler\6. Sum square difference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="HackerRank\AdInfinitum\README.md" />
+    <None Include="HackerRank\Codesprint\README.md" />
+    <None Include="HackerRank\Codesprint\UniversityCodesprint\README.md" />
+    <None Include="HackerRank\Codesprint\WorldCodeSprint8\README.md" />
+    <None Include="HackerRank\Codesprint\WorldCodesprint\README.md" />
+    <None Include="HackerRank\Companies\Codagon\README.md" />
+    <None Include="HackerRank\Companies\README.md" />
+    <None Include="HackerRank\Companies\WalmartLabs\README.md" />
     <None Include="HackerRank\README.md" />
+    <None Include="HackerRank\RookieRank\README.md" />
+    <None Include="HackerRank\WeekOfCode\README.md" />
+    <None Include="HackerRank\WeekOfCode\WeekOfCode26\README.md" />
+    <None Include="HackerRank\WeekOfCode\WeekOfCode27\README.md" />
+    <None Include="HackerRank\WeekOfCode\WeekOfCode28\README.md" />
+    <None Include="HackerRank\WeekOfCode\WeekOfCode29\README.md" />
+    <None Include="HackerRank\WeekOfCode\WeekOfCode30\README.md" />
+    <None Include="HackerRank\WeekOfCode\WeekOfCode31\README.md" />
+    <None Include="Interviews\README.md" />
+    <Compile Include="ProjectEuler\1. MultiplesOf3And5.cs" />
+    <None Include="ProjectEuler\README.md" />
+    <None Include="README.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HackerRank\WeekOfCode\WeekOfCode27\" />
-    <Folder Include="Interviews\" />
-    <Folder Include="ProjectEuler\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

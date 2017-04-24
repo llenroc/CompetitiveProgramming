@@ -1,0 +1,4 @@
+﻿namespace ProjectEuler.Problem12
+{
+
+}
