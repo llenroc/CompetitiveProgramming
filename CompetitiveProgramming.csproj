@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,10 +31,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>CompetitiveProgramming.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,14 +48,82 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HackerRank\AdInfinitum\BirthdayTriplets.cs" />
+    <Compile Include="HackerRank\AdInfinitum\DivisorExploration.cs" />
+    <Compile Include="HackerRank\AdInfinitum\MatchstickExperiment.cs" />
+    <Compile Include="HackerRank\AdInfinitum\MCoprimeArrays.cs" />
+    <Compile Include="HackerRank\AdInfinitum\PaintingFigures.cs" />
+    <Compile Include="HackerRank\AdInfinitum\PolygonClipping.cs" />
+    <Compile Include="HackerRank\AdInfinitum\PrimitiveProblem.cs" />
+    <Compile Include="HackerRank\AdInfinitum\VCuttingTool.cs" />
+    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\MinimumMstGraph.cs" />
+    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\ParallelogramConnectivity.cs" />
+    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\QueryingSumsHasher.cs" />
+    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\QueryingSumsSA.cs" />
+    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\QueryingSumsSAOriginal.cs" />
+    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\QueryingSumsST.cs" />
+    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\QueryingSumsSuffixArray.cs" />
+    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\SherlockMerging.cs" />
+    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\StoryOfATree.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodeSprint8\BoxOperations.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodeSprint8\KingdomDivision.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodeSprint8\OptimalPolygon.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodeSprint8\QueensAttack.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\ArrayConstruction.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\Decibinary.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\PrimeDigitSum.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\SatisfactoryPairs.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\StreetParade.cs" />
+    <Compile Include="HackerRank\Companies\Codagon\Orb.cs" />
+    <Compile Include="HackerRank\Companies\Codagon\Positron.cs" />
+    <Compile Include="HackerRank\Companies\Codagon\Positron2.cs" />
+    <Compile Include="HackerRank\Companies\WalmartLabs\Bracket.cs" />
+    <Compile Include="HackerRank\Companies\WalmartLabs\CatalanNumbers.cs" />
+    <Compile Include="HackerRank\Companies\WalmartLabs\Delivery.cs" />
+    <Compile Include="HackerRank\Companies\WalmartLabs\DigitMinMax.cs" />
+    <Compile Include="HackerRank\Companies\WalmartLabs\Fibo.cs" />
+    <Compile Include="HackerRank\Companies\WalmartLabs\Progressions.cs" />
+    <Compile Include="HackerRank\RookieRank\PrefixNeighbors.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\CoPrimePaths+Extra.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\CoPrimePaths.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\CoPrimePaths2.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\CountingOnTrees.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\HowManySubstrings.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\HowManySubstrings2.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\ReturnOfNim.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\SamsPuzzle.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\TreeCoordinates.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode28\ChoosingWhiteBalls.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode28\DefiniteRandomWalk.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode28\LuckyNumber8.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode28\ValueOfFriendship.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode29\AlmostIntegerRockGarden.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode29\AlmostIntegerRockGarden2.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode29\BigSorting.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode29\DiameterMinimization.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode29\MegaprimeNumbers.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode29\MinimalDistance2Pi.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode29\Tarjan.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode30\GraphProblem.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode30\Poles.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode30\RangeModularQueries.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode30\StringQueries.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\CollidingCircles.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\NominatingGroupLeaders.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SpanningTreeFraction.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SpanningTreeFractionLCT.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane+Test.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane+Tree.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="HackerRank\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HackerRank\" />
+    <Folder Include="HackerRank\WeekOfCode\WeekOfCode27\" />
     <Folder Include="Interviews\" />
     <Folder Include="ProjectEuler\" />
   </ItemGroup>
