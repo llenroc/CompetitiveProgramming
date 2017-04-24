@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 
 namespace HackerRank.WeekOfCode31.CollidingCircles
 {
@@ -18,10 +19,12 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 		int n;
 		int k;
 		int[] r;
+		int maxk;
 		double[,] cache;
 		int partitions;
 		int maxPartitionSize;
 		int sizeLimit;
+		int nLimit;
 		#endregion
 
 		public static void Main()
@@ -41,44 +44,8 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 			partitions = n - k;
 			maxPartitionSize = k + 1;
 
-			sizeLimit = (k * maxPartitionSize < 3000000) ? int.MaxValue : 1000;
-			cache = new double[Min(k, sizeLimit) + 1, Min(maxPartitionSize, sizeLimit) + 1];
-
-			var ans = SmartSolve(); // O(n)
-			// Solve -- O(n) + O(Picked(k)) -- Picked is currently O(nk) 
-			// Naive -- O(2^n) for testing purposes
-
+			var ans = SmartSolve();
 			WriteLine(ans * PI);
-		}
-
-		double SmartSolve()
-		{
-
-			if (k == 0)
-				return r.Sum(x => (long)x * x);
-
-			if (partitions == 1)
-				return Pow(r.Sum(), 2);
-
-			var sumsquares = r.Sum(x => (double)x * x);
-			var squaresum = Pow(r.Sum(x => (double)x), 2);
-			var coproducts = squaresum - sumsquares;
-
-			var result = sumsquares;
-			var multiplier = 0.0;
-			var probability = 1.0;
-
-			long nn = n;
-			for (int i = 0; i < k; i++)
-			{
-				var phit = 2.0 / ((nn - 1) * nn);
-				multiplier += probability * phit;
-				probability *= (1.0 - phit);
-				nn--;
-			}
-
-			result += multiplier * coproducts;
-			return result;
 		}
 
 		long[] naivelist;
@@ -133,7 +100,35 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 			return ans;
 		}
 
+		double SmartSolve()
+		{
 
+			if (k == 0)
+				return r.Sum(x => (long)x * x);
+
+			if (partitions == 1)
+				return Pow(r.Sum(), 2);
+
+			var sumsquares = r.Sum(x => (double)x * x);
+			var squaresum = Pow(r.Sum(x => (double)x), 2);
+			var coproducts = squaresum - sumsquares;
+
+			var result = sumsquares;
+			var multiplier = 0.0;
+			var probability = 1.0;
+
+			long nn = n;
+			for (int i = 0; i < k; i++)
+			{
+				var phit = 2.0 / ((nn - 1) * nn);
+				multiplier += probability * phit;
+				probability *= (1.0 - phit);
+				nn--;
+			}
+
+			result += multiplier * coproducts;
+			return result;
+		}
 
 		double Solve()
 		{
@@ -151,7 +146,7 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 
 			double ysums = 0;
 			double ysquares = 0;
-			for (int i=0; i<n; i++)
+			for (int i = 0; i < n; i++)
 			{
 				Number a = r[i];
 				ysums += a;
@@ -159,14 +154,14 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 			}
 
 			counts[0] = 1;
-			for (int j = 1; j<=maxPartitionSize; j++)
+			for (int j = 1; j <= maxPartitionSize; j++)
 			{
 				Number x = sums[j - 1];
 				var x2 = squares[j - 1];
 				var cnts = counts[j - 1];
-				var xa = n*x + cnts * ysums;
-				var xa2 = n*x2 + 2 * ysums * x + cnts * ysquares;
-				counts[j] += n*cnts;
+				var xa = n * x + cnts * ysums;
+				var xa2 = n * x2 + 2 * ysums * x + cnts * ysquares;
+				counts[j] += n * cnts;
 				sums[j] += xa;
 				squares[j] += xa2;
 			}
@@ -220,13 +215,6 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 			if (k + 1 < size) return 0;
 			if (size < 1) return 0;
 
-			bool valid = k <= sizeLimit && size <= sizeLimit;
-			if (valid)
-			{
-				var c = cache[k, size];
-				if (c != 0) return c;
-			}
-
 			double result;
 			if (size <= 1)
 			{
@@ -249,13 +237,11 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 				}
 
 				var pickedDoubles = Picked(k - 1, size - 1);
-				var doubles = (double) size * (size - 1) * pickedDoubles;
+				var doubles = (double)size * (size - 1) * pickedDoubles;
 				result += doubles;
 				result /= 2.0;
 			}
 
-			if (valid)
-				cache[k, size] = result;
 			return result;
 		}
 

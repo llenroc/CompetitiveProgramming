@@ -1,68 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-class Delivery
+﻿namespace HackerRank.Walmart
 {
-    static void Driver(String[] args)
-    {
-        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
 
-        int[] array = Console.ReadLine().Split().Select(int.Parse).ToArray();
-        int n = array[0];
-        int m = array[1];
-        int q = array[2];
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
 
-        var foodMap = new HashSet<int>[m];
-        for (int i = 0; i < m; i++)
-        {
-            array = Console.ReadLine().Split().Skip(1).Select(int.Parse).ToArray();
-            foodMap[i] = new HashSet<int>(array);
-        }
+	class Delivery
+	{
+		static void Main(String[] args)
+		{
+			/* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
 
-        int time = 0;
-        int place = 1;
-        for (int i = 0; i < q; i++)
-        {
-            array = Console.ReadLine().Split().Select(int.Parse).ToArray();
-            int food = array[0];
-            int person = array[1];
+			int[] array = Console.ReadLine().Split().Select(int.Parse).ToArray();
+			int n = array[0];
+			int m = array[1];
+			int q = array[2];
 
-            int bestPlace = FindShortestPath(foodMap, place, food, person);
-            int t = CalcDistance(bestPlace, place) + CalcDistance(bestPlace, person);
-            time += t;
-            place = bestPlace;
-        }
+			var foodMap = new HashSet<int>[m + 1];
+			for (int i = 0; i < m; i++)
+			{
+				array = Console.ReadLine().Split().Skip(1).Select(int.Parse).ToArray();
+				foodMap[i + 1] = new HashSet<int>(array);
+			}
 
-        Console.WriteLine(time);
-    }
+			int time = 0;
+			int place = 1;
+			for (int i = 0; i < q; i++)
+			{
+				array = Console.ReadLine().Split().Select(int.Parse).ToArray();
+				int food = array[0];
+				int person = array[1];
 
-    public static int FindShortestPath(HashSet<int>[] foodMap, int loc, int food, int person)
-    {
-        if (foodMap[food].Contains(loc))
-            return loc;
+				int bestPlace = FindShortestPath(foodMap, place, food, person);
+				int t = CalcDistance(bestPlace, place) + CalcDistance(bestPlace, person);
 
-        int bestPlace = 0;
-        int bestTime = int.MaxValue;
-        foreach (var foodPlace in foodMap[food])
-        {
-            int time = CalcDistance(foodPlace, loc) + CalcDistance(foodPlace, person);
-            if (time < bestTime)
-            {
-                bestTime = time;
-                bestPlace = foodPlace;
-            }
-        }
-        return bestPlace;
-    }
+				//Console.WriteLine("place={0}->{0} time+{1}={2}", place,bestPlace,t,time+t);
+				time += t;
+				place = person;
 
-    public static int CalcDistance(int place1, int place2)
-    {
-        if (place1 == place2) return 0;
-        if (place1 > place2) return CalcDistance(place2, place1);
-        return 1 + CalcDistance(place1, place2 / 2);
-    }
+			}
+
+			Console.WriteLine(time);
+		}
+
+		public static int FindShortestPath(HashSet<int>[] foodMap, int loc, int food, int person)
+		{
+			if (foodMap[food].Contains(loc))
+				return loc;
+
+			int bestPlace = 0;
+			int bestTime = int.MaxValue;
+			foreach (var foodPlace in foodMap[food])
+			{
+				int time = CalcDistance(foodPlace, loc) + CalcDistance(foodPlace, person);
+				if (time < bestTime)
+				{
+					bestTime = time;
+					bestPlace = foodPlace;
+				}
+			}
+			return bestPlace;
+		}
+
+		public static int CalcDistance(int place1, int place2)
+		{
+			if (place1 == place2) return 0;
+			if (place1 > place2) return CalcDistance(place2, place1);
+			return 1 + CalcDistance(place1, place2 / 2);
+		}
 
 
 
+	}
 }

@@ -43,7 +43,7 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 			v = Ni(n);
 			g = Ni();
 
-			sqrt = n; // Math.Min(400, (int)(Sqrt(n) + 1));
+			sqrt = Math.Min(Parameters.MinSqrt, (int)(Sqrt(n) + 1));
 
 			groups = new Group[g];
 			for (int i = 0; i < g; i++)
@@ -57,7 +57,7 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 				};
 			}
 
-			//SolveLargeCases();
+			SolveLargeCases();
 
 			Solve();
 
@@ -77,15 +77,19 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 			var largeElements = new List<int>(sqrt);
 			for (int i = 0; i < inverted.Length; i++)
 			{
-				inverted[i] = new int[counts[i]];
 				if (counts[i] >= sqrt)
+				{
+					inverted[i] = new int[counts[i]];
 					largeElements.Add(i);
+				}
 			}
 
 			for (var i = 0; i < v.Length; i++)
 			{
 				var e = v[i];
-				inverted[e][indices[e]++] = i;
+				var ie = inverted[e];
+				if (ie != null)
+					ie[indices[e]++] = i;
 			}
 
 			foreach (var group in groups)
@@ -116,14 +120,6 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 		{
 			counts = new int[n];
 			updateLog = new int[n];
-			bags = new MinBag[sqrt];
-
-			foreach (var group in groups)
-			{
-				var x = group.X;
-				if (group.Answer == null && x < sqrt && bags[x] == null)
-					bags[x] = new MinBag(updateLog);
-			}
 
 			var sqrtN = (int)Sqrt(n);
 			var queriesSorted = groups.ToList();
@@ -137,6 +133,15 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 				return x.L.CompareTo(y.L);
 			});
 
+			bags = new MinBag[sqrt];
+			foreach (var q in queriesSorted)
+			{
+				var x = q.X;
+				if (bags[x] == null)
+					bags[x] = new MinBag(updateLog);
+			}
+
+
 			int mosLeft = 0;
 			int mosRight = -1;
 
@@ -147,13 +152,9 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 				while (mosLeft > q.L) AddDelta(v[--mosLeft], +1);
 				while (mosLeft < q.L) AddDelta(v[mosLeft++], -1);
 				var x = q.X;
-				q.Answer = x >= 0 && x < bags.Length && bags[x] != null && bags[x].Count != 0
-					? bags[x].Min()
-					: -1;
+				q.Answer = bags[x].Count != 0 ? bags[x].Min() : -1;
 			}
 		}
-
-
 
 		void AddDelta(int e, int delta)
 		{
@@ -184,8 +185,7 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 				t[i] = value;
 		}
 
-		public static int BinarySearch<T>(T[] array, T value, int left, int right, bool upper = false)
-		where T : IComparable<T>
+		public static int BinarySearch(int[] array, int value, int left, int right, bool upper = false)
 		{
 			while (left <= right)
 			{
@@ -327,6 +327,7 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 	public class SegmentTree
 	{
 		private int[] _tree;
+		private static int[] empty = new int[0];
 
 		public SegmentTree(int size)
 		{
@@ -338,7 +339,7 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 		public void Ensure(int index)
 		{
 			if (index << 1 < _tree.Length) return;
-			int newSize = Max(256, Max(index + 1, _tree.Length));
+			int newSize = Max(Parameters.InitialBagSize, Max(index + 1, _tree.Length));
 			var oldTree = _tree;
 			var oldTreeSize = oldTree.Length >> 1;
 			_tree = CreateTree(newSize);
@@ -347,6 +348,7 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 
 		int[] CreateTree(int size)
 		{
+			if (size == 0) return empty;
 			var tree = new int[size * 2];
 			for (int i = 0; i < tree.Length; i++)
 				tree[i] = int.MaxValue;
@@ -375,7 +377,7 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 				for (; i > 1; i >>= 1)
 				{
 					var newMin = Math.Min(_tree[i], _tree[i ^ 1]);
-					if (_tree[i>>1] == newMin) break;
+					if (_tree[i >> 1] == newMin) break;
 					_tree[i >> 1] = newMin;
 				}
 			}
@@ -477,6 +479,9 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 	{
 
 		#region  Parameters
+		public const int InitialBagSize = 16;
+		public const int MinSqrt = 100;
+
 
 #if DEBUG
 		public static bool Verbose = true;

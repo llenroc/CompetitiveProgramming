@@ -103,8 +103,8 @@ namespace HackerRank.WeekOfCode29.DiameterMinimization
 			if (m >= n - 1)
 				return Graph.Complete(n);
 
-			if (m == 2)
-				return Graph.CycleGraph(n, m, true);
+			//if (m == 2)
+			//	return Graph.CycleGraph(n, m, true);
 
 			// Case Analysis
 			if (cases.ContainsKey(n))

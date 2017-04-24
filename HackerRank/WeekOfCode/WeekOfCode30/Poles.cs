@@ -1,58 +1,136 @@
 ﻿namespace HackerRank.WeekOfCode30.Poles
 {
-    using System;
-    using static System.Math;
-    using static System.Console;
+	using System;
+	using System.Collections.Generic;
+	using static System.Math;
+	using static System.Console;
+	using static FastIO;
 
-    public static class Solution
-    {
-        #region Variables
-        static int[] x;
-        static int[] w;
-        static long[,] cache;
-        #endregion
+	public static class Solution
+	{
+		#region Variables
+		static int[] x;
+		static int[] w;
+		static int[] wsum;
+		#endregion
 
-        public static void Main()
-        {
-            var input = ReadLine().Split();
-            int n = int.Parse(input[0]);
-            int k = int.Parse(input[1]);
+		public static void Main()
+		{
+			InitIO();
+			int n = Ni();
+			int k = Ni();
+			x = new int[n + 1];
+			w = new int[n + 1];
+			wsum = new int[n + 1];
 
-            x = new int[n];
-            w = new int[n];
-            cache = new long[n + 1, k + 1];
+			int sum = 0;
+			for (int i = 0; i < n; i++)
+			{
+				x[i] = Ni();
+				w[i] = Ni();
+				wsum[i + 1] = sum = sum + w[i];
+			}
 
-            for (int i = 0; i < n; i++)
-            {
-                input = ReadLine().Split();
-                x[i] = int.Parse(input[0]);
-                w[i] = int.Parse(input[1]);
-            }
+			long cost = Dp(k, n);
+			WriteLine(cost);
+		}
 
-            const long MaxCost = long.MaxValue >> 15;
+		public static long Dp(int k, int n)
+		{
+			const long MaxCost = long.MaxValue >> 15;
+			var cache = new long[n + 1];
+			var cache2 = new long[n + 1];
+			var buffer = new long[n + 1];
 
-            for (int kk = 1; kk <= k; kk++)
-            {
-                for (int nn = kk + 1; nn <= n; nn++)
-                {
-                    long rollCost = 0;
-                    long rollsCost = 0;
-                    long minCost = MaxCost;
-                    long xprev = x[nn - 1];
-                    for (int i = n - 1; i >= k - 1; i--)
-                    {
-                        rollsCost += rollCost * (xprev - x[i]);
-                        long cost = cache[i, k-1] + rollsCost;
-                        if (cost < minCost) minCost = cost;
-                        rollCost += w[i];
-                        xprev = x[i];
-                    }
-                    cache[nn, kk] = minCost;
-                }
-            }
+			for (int nn = 1; nn <= n; nn++)
+				cache[nn] = MaxCost;
 
-            WriteLine(cache[n, k]);
-        }
+			for (int kk = 1; kk <= k; kk++)
+			{
+				cache2[kk] = 0;
 
-    }
+				long min = int.MaxValue;
+				int limit = n - (k - kk);
+
+				for (int nn = kk + 1; nn <= limit; nn++)
+				{
+					long rollCost = 0;
+					long rollsCost = 0;
+					long minCost = MaxCost;
+					long xprev = x[nn - 1];
+					for (int i = nn - 1; i >= kk - 1; i--)
+					{
+						rollsCost += rollCost * (xprev - x[i]);
+						long cost = cache[i] + rollsCost;
+						if (cost < minCost) minCost = cost;
+						rollCost += w[i];
+						if (rollsCost >= minCost) break;
+						xprev = x[i];
+					}
+					cache2[nn] = minCost;
+				}
+
+				var tmp = cache;
+				cache = cache2;
+				cache2 = tmp;
+			}
+
+			return cache[n];
+		}
+	}
+
+	public static class FastIO
+	{
+		static System.IO.Stream stream;
+		static int idx, bytesRead;
+		static byte[] buffer;
+		const int MonoBufferSize = 4096;
+
+		public static void InitIO(
+			int stringCapacity = 16,
+			System.IO.Stream input = null)
+		{
+			stream = input ?? Console.OpenStandardInput();
+			idx = bytesRead = 0;
+			buffer = new byte[MonoBufferSize];
+		}
+
+		static void ReadMore()
+		{
+			idx = 0;
+			bytesRead = stream.Read(buffer, 0, buffer.Length);
+			if (bytesRead <= 0) buffer[0] = 32;
+		}
+
+		public static int Read()
+		{
+			if (idx >= bytesRead) ReadMore();
+			return buffer[idx++];
+		}
+
+
+		public static int Ni()
+		{
+			var c = SkipSpaces();
+			bool neg = c == '-';
+			if (neg) { c = Read(); }
+
+			int number = c - '0';
+			while (true)
+			{
+				var d = Read() - '0';
+				if ((uint)d > 9) break;
+				number = number * 10 + d;
+			}
+			return neg ? -number : number;
+		}
+
+		public static int SkipSpaces()
+		{
+			int c;
+			do c = Read(); while ((uint)c - 33 >= (127 - 33));
+			return c;
+		}
+	}
+
 }
