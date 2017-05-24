@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Library;
-
-namespace HackerRank.CodeSprint
+﻿namespace HackerRank.CodeSprint.CountingOnTrees2
 {
-    public unsafe class CountingOnTrees2
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+
+
+	public unsafe class Solution
     {
         static void Main(String[] args)
         {
-            new CountingOnTrees().Run();
+            new Solution().Run();
         }
 
         int nodeCount;
@@ -169,6 +167,12 @@ namespace HackerRank.CodeSprint
             }
         }
 
+		void Swap(ref int x, ref int y)
+		{
+			int tmp = x;
+			x = y;
+			y = tmp;
+		}
 
         int GetLca(int x, int y)
         {

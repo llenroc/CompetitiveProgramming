@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CompetitiveProgramming</RootNamespace>
     <AssemblyName>CompetitiveProgramming</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,14 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HackerRank\AdInfinitum17\BirthdayTriplets.cs" />
-    <Compile Include="HackerRank\AdInfinitum17\DivisorExplorationII.cs" />
-    <Compile Include="HackerRank\AdInfinitum17\MatchstickExperiment.cs" />
-    <Compile Include="HackerRank\AdInfinitum17\MCoprimeArrays.cs" />
-    <Compile Include="HackerRank\AdInfinitum17\PaintingFigures.cs" />
-    <Compile Include="HackerRank\AdInfinitum17\PolygonClipping.cs" />
-    <Compile Include="HackerRank\AdInfinitum17\PrimitiveProblem.cs" />
-    <Compile Include="HackerRank\AdInfinitum17\VCuttingTool.cs" />
+    <Compile Include="HackerRank\AdInfinitum\AdInfinitum17\BirthdayTriplets.cs" />
+    <Compile Include="HackerRank\AdInfinitum\AdInfinitum17\DivisorExplorationII.cs" />
+    <Compile Include="HackerRank\AdInfinitum\AdInfinitum17\MatchstickExperiment.cs" />
+    <Compile Include="HackerRank\AdInfinitum\AdInfinitum17\MCoprimeArrays.cs" />
+    <Compile Include="HackerRank\AdInfinitum\AdInfinitum17\PaintingFigures.cs" />
+    <Compile Include="HackerRank\AdInfinitum\AdInfinitum17\PolygonClipping.cs" />
+    <Compile Include="HackerRank\AdInfinitum\AdInfinitum17\PrimitiveProblem.cs" />
+    <Compile Include="HackerRank\AdInfinitum\AdInfinitum17\VCuttingTool.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint1\CountingOnTrees.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint1\UniqueDivideAndConquer.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint1\WalkingTheApproximateLongestPath.cs" />
@@ -66,9 +67,7 @@
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint2\MinimumMstGraph.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint2\ParallelogramConnectivity.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint2\QueryingSumsHasher.cs" />
-    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint2\QueryingSumsSuffixArrayFromSuffixAutomaton.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint2\QueryingSumsSuffixAutomaton.cs" />
-    <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint2\QueryingSumsSuffixArrayFromSuffixTree.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint2\QueryingSumsSuffixArray.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint2\GameOfTwoStacks.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint2\StoryOfATree.cs" />
@@ -76,6 +75,11 @@
     <Compile Include="HackerRank\Codesprint\WomensCodesprint\WomensCodesprint3\ChoosingRecipes.cs" />
     <Compile Include="HackerRank\Codesprint\WomensCodesprint\WomensCodesprint3\ElevatorSimulator.cs" />
     <Compile Include="HackerRank\Codesprint\WomensCodesprint\WomensCodesprint3\SpringDecorating.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint10\MaximalANDSubsequences.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint10\MaximumDisjointSubtreeProduct.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint10\NodePointMappings.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint10\PermutationHappiness.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint10\ZigzagArray.cs" />
     <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint8\RoadsAndLibraries.cs" />
     <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint8\TreeCoordinates2.cs" />
     <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodeSprint9\BoxOperations.cs" />
@@ -92,6 +96,9 @@
     <Compile Include="HackerRank\Companies\NcrCodesprint\GameOfNumbers.cs" />
     <Compile Include="HackerRank\Companies\NcrCodesprint\CoconutPlantation.cs" />
     <Compile Include="HackerRank\Companies\WalmartLabs\PopsticleStickMountains.cs" />
+    <Compile Include="HackerRank\RookieRank\RookieRank3\CultureConference.cs" />
+    <Compile Include="HackerRank\RookieRank\RookieRank3\MaximalTourism.cs" />
+    <Compile Include="HackerRank\RookieRank\RookieRank3\MaxScore.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\StreetParade.cs" />
     <Compile Include="HackerRank\Companies\Codagon\MatchstickWarehouse.cs" />
     <Compile Include="HackerRank\Companies\Codagon\DependencyHell.cs" />
@@ -102,16 +109,13 @@
     <Compile Include="HackerRank\Companies\WalmartLabs\DigitMinMax.cs" />
     <Compile Include="HackerRank\Companies\WalmartLabs\InterestingFibonacciSum.cs" />
     <Compile Include="HackerRank\Companies\WalmartLabs\CountYourProgressions.cs" />
-    <Compile Include="HackerRank\RookieRank\KnightLOnAChessboard.cs" />
-    <Compile Include="HackerRank\RookieRank\PrefixNeighbors.cs" />
+    <Compile Include="HackerRank\RookieRank\RookieRank2\KnightLOnAChessboard.cs" />
+    <Compile Include="HackerRank\RookieRank\RookieRank2\PrefixNeighbors.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\HardHomework.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\Twins.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\MusicOnTheStreet.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\TastesLikeWinning.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\SatisfactoryPairs.cs" />
-    <Compile Include="HackerRank\WeekOfCode\WeekOfCode27\CoPrimePaths+Extra.cs" />
-    <Compile Include="HackerRank\WeekOfCode\WeekOfCode27\CoPrimePaths.cs" />
-    <Compile Include="HackerRank\WeekOfCode\WeekOfCode27\CoPrimePaths2.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint1\CountingOnTrees2.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode27\TailorShop.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode27\HackonacciMatrixRotations.cs" />
@@ -149,6 +153,9 @@
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane+Test.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane+Tree.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane.cs" />
+    <Compile Include="Library\FastInput.cs" />
+    <Compile Include="Library\FastOutput.cs" />
+    <Compile Include="Library\Library.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectEuler\15. Lattice paths.cs" />
     <Compile Include="ProjectEuler\14. Longest Collatz sequence.cs" />
@@ -168,7 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="HackerRank\AdInfinitum17\README.md" />
+    <None Include="HackerRank\AdInfinitum\AdInfinitum17\README.md" />
     <None Include="HackerRank\Codesprint\README.md" />
     <None Include="HackerRank\Codesprint\UniversityCodesprint\UniversityCodesprint2\README.md" />
     <None Include="HackerRank\Codesprint\WorldCodesprint\WorldCodeSprint9\README.md" />
@@ -189,6 +196,12 @@
     <None Include="Library\README.md" />
     <None Include="ProjectEuler\README.md" />
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Documents\Dev\Projects\SoftPerson.Core\SoftPerson.Core.csproj">
+      <Project>{bd46e1f4-0f53-450a-89d4-e6bc56489711}</Project>
+      <Name>SoftPerson.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

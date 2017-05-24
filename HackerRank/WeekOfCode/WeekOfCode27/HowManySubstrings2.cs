@@ -986,6 +986,9 @@ namespace HackerRank.CodeSprint.WeekOfCode26.HowManySubstrings2
 		}
 	}
 
+
+
+
 	public static class BitTools
 	{
 		public static int HighestOneBit(int n)

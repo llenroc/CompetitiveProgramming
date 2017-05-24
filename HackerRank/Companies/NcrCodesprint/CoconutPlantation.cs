@@ -209,7 +209,10 @@ namespace HackerRank.NcrCodesprint
 
 				public override string ToString()
 				{
-					return $"({x},{y}) {d}{useX ? 'v':'h'} {required ? "required":""}";
+					var u = useX ? 'v' : 'h';
+					var r = required ? "required" : "";
+
+					return $"({x},{y}) {d}{u} {r}";
 				}
 			}
 		}

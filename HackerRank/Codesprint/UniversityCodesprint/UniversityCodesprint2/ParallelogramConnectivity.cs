@@ -2,7 +2,7 @@
 
 using System.Collections;
 
-namespace HackerRank.UniversityCodesprint2
+namespace HackerRank.UniversityCodesprint2.ParallelogramConnectivity
 {
 	using System;
 	using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace HackerRank.UniversityCodesprint2
 	using static System.Console;
 	using static HackerRankUtils;
 
-	public class ParallelogramConnectivity
+	public class Solution
 	{
 		#region Variables
 
