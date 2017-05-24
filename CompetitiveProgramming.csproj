@@ -153,6 +153,12 @@
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane+Test.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane+Tree.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode31\SplitPlane.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode32\BallsAndBoxes-MinCostMaxFlow.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode32\CircularWalk.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode32\Duplication.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode32\FightTheMonsters.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode32\GeometricTrick.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode32\SpecialSubstrings-PalindromeTree.cs" />
     <Compile Include="Library\FastInput.cs" />
     <Compile Include="Library\FastOutput.cs" />
     <Compile Include="Library\Library.cs" />
@@ -172,6 +178,20 @@
     <Compile Include="ProjectEuler\7. 10001st prime.cs" />
     <Compile Include="ProjectEuler\6. Sum square difference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\CircularWalk.cpp" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\CircularWalk.java" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\CircularWalk.py" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\Duplication.cpp" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\Duplication.java" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\Duplication.py" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\FightTheMonsters.cpp" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\FightTheMonsters.java" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\FightTheMonsters.py" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\GeometricTrick-Lambda.cpp" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\GeometricTrick-Lambda.java" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\GeometricTrick.cpp" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\GeometricTrick.java" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode32\GeometricTrick.py" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
