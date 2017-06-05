@@ -141,7 +141,6 @@ namespace HackerRank.WeekOfCode31.NominatingGroupLeaders
 					bags[x] = new MinBag(updateLog);
 			}
 
-
 			int mosLeft = 0;
 			int mosRight = -1;
 

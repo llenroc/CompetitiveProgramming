@@ -1,7 +1,6 @@
 namespace HackerRank.WeekOfCode32.CircularWalk
 {
-	//namespace HackerRank.WeekOfCode31.Problem
-	// Powered by caide (code generator, tester, and library code inliner)
+	// https://www.hackerrank.com/contests/w32/challenges/circular-walk
 
 	using System;
 	using System.Collections;

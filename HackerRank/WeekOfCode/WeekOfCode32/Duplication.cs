@@ -1,11 +1,12 @@
 namespace HackerRank.WeekOfCode32.Duplication
 {
+	// https://www.hackerrank.com/contests/w32/challenges/duplication
+
+
 	using System;
 	using System.Linq;
 	using System.IO;
 	using System.Collections.Generic;
-	// Powered by caide (code generator, tester, and library code inliner)
-	// Contest templates
 
 	class Solution
 	{

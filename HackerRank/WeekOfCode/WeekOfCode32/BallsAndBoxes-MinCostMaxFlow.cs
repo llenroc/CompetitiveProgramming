@@ -1,5 +1,7 @@
 namespace HackerRank.WeekOfCode32.BallsAndBoxes
 {
+	// https://www.hackerrank.com/contests/w32/challenges/balls-and-boxes
+
 	using System;
 	using System.Collections.Generic;
 	using System.Diagnostics;

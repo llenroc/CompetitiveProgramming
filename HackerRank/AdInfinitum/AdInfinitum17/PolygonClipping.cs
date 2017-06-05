@@ -143,11 +143,7 @@ namespace HackerRank.AdInfinitum17
 
             double x = (tmp1.X * tmp2.Y) - (tmp1.Y * tmp2.X); //	dot product of perpendicular?
 
-            if (x < 0)
-                return false;
-            if (x > 0)
-                return true;
-            return null;
+	        return x < 0 ? false : (x > 0 ? (bool?) true : null);
         }
 
         private static bool IsNearZero(double testValue)

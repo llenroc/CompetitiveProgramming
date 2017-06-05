@@ -1,5 +1,7 @@
 namespace HackerRank.WeekOfCode32.GeometricTrick
 {
+	// https://www.hackerrank.com/contests/w32/challenges/geometric-trick
+
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;

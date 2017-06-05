@@ -993,7 +993,7 @@ namespace HackerRank.CodeSprint.WeekOfCode26.HowManySubstrings2
 	{
 		public static int HighestOneBit(int n)
 		{
-			return 1 << Log2(n);
+			return n!=0 ? 1 << Log2(n) : 0;
 		}
 
 		public static int Log2(int value)

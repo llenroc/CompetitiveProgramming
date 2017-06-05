@@ -1,3 +1,6 @@
+// https://www.hackerrank.com/contests/w32/challenges/geometric-trick
+
+
 #include <cmath>
 #include <cstdio>
 #include <vector>
