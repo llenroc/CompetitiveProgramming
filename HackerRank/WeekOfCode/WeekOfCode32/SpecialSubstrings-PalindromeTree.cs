@@ -1,5 +1,6 @@
 namespace HackerRank.WeekOfCode32.SpecialSubstrings
 {
+	// https://www.hackerrank.com/contests/w32/challenges/special-substrings
 
 	using System;
 	using System.Collections.Generic;
