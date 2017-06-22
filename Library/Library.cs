@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public static class Library
+public static partial class Library
 {
 	#region Mod Math
 	public const int MOD = 1000 * 1000 * 1000 + 7;

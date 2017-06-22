@@ -80,6 +80,11 @@
     <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint10\NodePointMappings.cs" />
     <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint10\PermutationHappiness.cs" />
     <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint10\ZigzagArray.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint11\BestMask.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint11\CityConstruction.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint11\FiguresInAnInfiniteGrid%28Approximate%29.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint11\RoadTrip.cs" />
+    <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint11\SimpleFileCommands.cs" />
     <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint8\RoadsAndLibraries.cs" />
     <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint8\TreeCoordinates2.cs" />
     <Compile Include="HackerRank\Codesprint\WorldCodesprint\WorldCodeSprint9\BoxOperations.cs" />
@@ -140,6 +145,8 @@
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode29\MinimalDistance2Pi.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode29\Tarjan.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode30\GraphProblem.cs" />
+    <Content Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint11\BalancedArray.cpp" />
+    <Content Include="HackerRank\Codesprint\WorldCodesprint\WorldCodesprint11\NumericString.cpp" />
     <Content Include="HackerRank\WeekOfCode\WeekOfCode30\Poles.cpp" />
     <Content Include="HackerRank\WeekOfCode\WeekOfCode30\Poles.java" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode30\Poles.cs" />
@@ -223,6 +230,9 @@
       <Name>SoftPerson.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Contests\" />
+    <Folder Include="Languages\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
