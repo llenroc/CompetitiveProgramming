@@ -1,91 +1,93 @@
-// https://www.hackerrank.com/contests/infinitum18/challenges/divisor-exploration-3
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using static FastIO;
-using static Library;
-using static System.Math;
-using static System.Array;
-
-public class Solution
+namespace HackerRank.AdInfinitum18.DivisorExploration3
 {
-	int[] ps;
-	int[] es;
-	long[] answers;
+	// https://www.hackerrank.com/contests/infinitum18/challenges/divisor-exploration-3
 
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using static FastIO;
+	using static Library;
+	using static System.Math;
+	using static System.Array;
 
-	public void solve(Stream input, Stream output)
+	public class Solution
 	{
-		InitInput(input);
-		InitOutput(output);
+		int[] ps;
+		int[] es;
+		long[] answers;
 
 
-		int queries = Ni();
-		answers = new long[queries];
-		int maxd = 0;
-		var maxe = new int[1001];
-		
-    	int maxm = 0;
-		for (int q = 0; q < queries; q++)
+		public void solve(Stream input, Stream output)
 		{
-			var m = Ni();
-			var a = Ni();
-			var d = Ni();
+			InitInput(input);
+			InitOutput(output);
 
-			maxm = Math.Max(maxm, m);
-			maxd = Math.Max(maxd, d);
 
-			long answer = 1;
-			es = new int[m];
-			for (int i = 0; i < m; i++)
+			int queries = Ni();
+			answers = new long[queries];
+			int maxd = 0;
+			var maxe = new int[1001];
+
+			int maxm = 0;
+			for (int q = 0; q < queries; q++)
 			{
-                answer = answer * solveSmart(i, a+i+1, d) % MOD;
+				var m = Ni();
+				var a = Ni();
+				var d = Ni();
+
+				maxm = Math.Max(maxm, m);
+				maxd = Math.Max(maxd, d);
+
+				long answer = 1;
+				es = new int[m];
+				for (int i = 0; i < m; i++)
+				{
+					answer = answer * solveSmart(i, a + i + 1, d) % MOD;
+				}
+				WriteLine(answer);
 			}
-			WriteLine(answer);
+
+			Flush();
+			Console.Error.WriteLine();
 		}
 
-		Flush();
-		Console.Error.WriteLine();
-	}
-	
-	int time = 1;
+		int time = 1;
 
-	public long TotientOfPrime(int p, int a)
-	{
-		long result = ModPow(p, a - 1);
-		result = (result * p % MOD + MOD - result) % MOD;
-		return result;
-	}
-
-   
-	public long solveSmart(int ip, int a, int d)
-	{
-       
-        if (a == 0) return 1;
-
-		long result = 1;
-
-		int p = Primes1000[ip];
-		if (d <= 1)
-			return d == 1 ? ModPow(p, a) : TotientOfPrime(p, a);
-
-		for (int i = 1; i <= a; i++)
+		public long TotientOfPrime(int p, int a)
 		{
-			result = p * result % MOD;
-			result += Comb(i + d - 2, d - 2);
-			if (result >= MOD) result -= MOD;
+			long result = ModPow(p, a - 1);
+			result = (result * p % MOD + MOD - result) % MOD;
+			return result;
 		}
 
-		return result % MOD;
-	}
 
-    static int[] Primes1000 = new int[]
-	{
+		public long solveSmart(int ip, int a, int d)
+		{
+
+			if (a == 0) return 1;
+
+			long result = 1;
+
+			int p = Primes1000[ip];
+			if (d <= 1)
+				return d == 1 ? ModPow(p, a) : TotientOfPrime(p, a);
+
+			for (int i = 1; i <= a; i++)
+			{
+				result = p * result % MOD;
+				result += Comb(i + d - 2, d - 2);
+				if (result >= MOD) result -= MOD;
+			}
+
+			return result % MOD;
+		}
+
+		static int[] Primes1000 = new int[]
+		{
 		2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
 		31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
 		73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
@@ -186,386 +188,391 @@ public class Solution
 		7649, 7669, 7673, 7681, 7687, 7691, 7699, 7703, 7717, 7723,
 		7727, 7741, 7753, 7757, 7759, 7789, 7793, 7817, 7823, 7829,
 		7841, 7853, 7867, 7873, 7877, 7879, 7883, 7901, 7907, 7919,
-	};
+		};
 
-}
-
-public static class Library
-{
-	#region Mod Math
-	public const int MOD = 1000 * 1000 * 1000 + 7;
-
-	static int[] _inverse;
-	public static long Inverse(long n)
-	{
-		long result;
-
-		if (_inverse == null)
-			_inverse = new int[8000];
-
-		if (n < _inverse.Length && (result = _inverse[n]) != 0)
-			return result - 1;
-
-		result = ModPow(n, MOD - 2);
-		if (n < _inverse.Length)
-			_inverse[n] = (int)(result + 1);
-		return result;
 	}
 
-	public static long Mult(long left, long right)
+	public static class Library
 	{
-		return (left * right) % MOD;
-	}
+		#region Mod Math
+		public const int MOD = 1000 * 1000 * 1000 + 7;
 
-	public static long Div(long left, long divisor)
-	{
-		return left % divisor == 0
-			? left / divisor
-			: Mult(left, Inverse(divisor));
-	}
-
-	public static long Subtract(long left, long right)
-	{
-		return (left + (MOD - right)) % MOD;
-	}
-
-	public static long Fix(long n)
-	{
-		return ((n % MOD) + MOD) % MOD;
-	}
-
-	public static long ModPow(long n, long p, long mod = MOD)
-	{
-		long b = n;
-		long result = 1;
-		while (p != 0)
+		static int[] _inverse;
+		public static long Inverse(long n)
 		{
-			if ((p & 1) != 0)
-				result = (result * b) % mod;
-			p >>= 1;
-			b = (b * b) % mod;
-		}
-		return result;
-	}
+			long result;
 
-	public static long Pow(long n, long p)
-	{
-		long b = n;
-		long result = 1;
-		while (p != 0)
-		{
-			if ((p & 1) != 0)
-				result *= b;
-			p >>= 1;
-			b *= b;
-		}
-		return result;
-	}
+			if (_inverse == null)
+				_inverse = new int[8000];
 
-	#endregion
+			if (n < _inverse.Length && (result = _inverse[n]) != 0)
+				return result - 1;
 
-	#region Combinatorics
-	static List<long> _fact;
-	static List<long> _ifact;
-
-	public static long Fact(int n)
-	{
-		if (_fact == null) _fact = new List<long>(100) { 1 };
-		for (int i = _fact.Count; i <= n; i++)
-			_fact.Add(Mult(_fact[i - 1], i));
-		return _fact[n];
-	}
-
-	public static long InverseFact(int n)
-	{
-		if (_ifact == null) _ifact = new List<long>(100) { 1 };
-		for (int i = _ifact.Count; i <= n; i++)
-			_ifact.Add(Div(_ifact[i - 1], i));
-		return _ifact[n];
-	}
-
-	public static long Comb(int n, int k)
-	{
-		if (k <= 1) return k == 1 ? n : k == 0 ? 1 : 0;
-		if (k + k > n) return Comb(n, n - k);
-		return Mult(Mult(Fact(n), InverseFact(k)), InverseFact(n - k));
-	}
-
-	#endregion
-
-	#region Common
-
-	public static void Swap<T>(ref T a, ref T b)
-	{
-		var tmp = a;
-		a = b;
-		b = tmp;
-	}
-
-	public static void Clear<T>(T[] t, T value = default(T))
-	{
-		for (int i = 0; i < t.Length; i++)
-			t[i] = value;
-	}
-
-	public static int BinarySearch<T>(T[] array, T value, int left, int right, bool upper = false)
-		where T : IComparable<T>
-	{
-		while (left <= right)
-		{
-			int mid = left + (right - left) / 2;
-			int cmp = value.CompareTo(array[mid]);
-			if (cmp > 0 || cmp == 0 && upper)
-				left = mid + 1;
-			else
-				right = mid - 1;
-		}
-		return left;
-	}
-
-	#endregion
-
-
-}
-
-
-public static class FastIO
-{
-	#region  Input
-	static System.IO.Stream inputStream;
-	static int inputIndex, bytesRead;
-	static byte[] inputBuffer;
-	static System.Text.StringBuilder builder;
-	const int MonoBufferSize = 4096;
-
-	public static void InitInput(System.IO.Stream input = null, int stringCapacity = 16)
-	{
-		builder = new System.Text.StringBuilder(stringCapacity);
-		inputStream = input ?? Console.OpenStandardInput();
-		inputIndex = bytesRead = 0;
-		inputBuffer = new byte[MonoBufferSize];
-	}
-
-	static void ReadMore()
-	{
-		inputIndex = 0;
-		bytesRead = inputStream.Read(inputBuffer, 0, inputBuffer.Length);
-		if (bytesRead <= 0) inputBuffer[0] = 32;
-	}
-
-	public static int Read()
-	{
-		if (inputIndex >= bytesRead) ReadMore();
-		return inputBuffer[inputIndex++];
-	}
-
-	public static T[] N<T>(int n, Func<T> func)
-	{
-		var list = new T[n];
-		for (int i = 0; i < n; i++) list[i] = func();
-		return list;
-	}
-
-	public static int[] Ni(int n)
-	{
-		var list = new int[n];
-		for (int i = 0; i < n; i++) list[i] = Ni();
-		return list;
-	}
-
-	public static long[] Nl(int n)
-	{
-		var list = new long[n];
-		for (int i = 0; i < n; i++) list[i] = Nl();
-		return list;
-	}
-
-	public static string[] Ns(int n)
-	{
-		var list = new string[n];
-		for (int i = 0; i < n; i++) list[i] = Ns();
-		return list;
-	}
-
-	public static int Ni()
-	{
-		var c = SkipSpaces();
-		bool neg = c == '-';
-		if (neg) { c = Read(); }
-
-		int number = c - '0';
-		while (true)
-		{
-			var d = Read() - '0';
-			if ((uint)d > 9) break;
-			number = number * 10 + d;
-		}
-		return neg ? -number : number;
-	}
-
-	public static long Nl()
-	{
-		var c = SkipSpaces();
-		bool neg = c == '-';
-		if (neg) { c = Read(); }
-
-		long number = c - '0';
-		while (true)
-		{
-			var d = Read() - '0';
-			if ((uint)d > 9) break;
-			number = number * 10 + d;
-		}
-		return neg ? -number : number;
-	}
-
-	public static char[] Nc(int n)
-	{
-		var list = new char[n];
-		for (int i = 0, c = SkipSpaces(); i < n; i++, c = Read()) list[i] = (char)c;
-		return list;
-	}
-
-	public static byte[] Nb(int n)
-	{
-		var list = new byte[n];
-		for (int i = 0, c = SkipSpaces(); i < n; i++, c = Read()) list[i] = (byte)c;
-		return list;
-	}
-
-	public static string Ns()
-	{
-		var c = SkipSpaces();
-		builder.Clear();
-		while (true)
-		{
-			if ((uint)c - 33 >= (127 - 33)) break;
-			builder.Append((char)c);
-			c = Read();
-		}
-		return builder.ToString();
-	}
-
-	public static int SkipSpaces()
-	{
-		int c;
-		do c = Read(); while ((uint)c - 33 >= (127 - 33));
-		return c;
-	}
-	#endregion
-
-	#region Output
-
-	static System.IO.Stream outputStream;
-	static byte[] outputBuffer;
-	static int outputIndex;
-
-	public static void InitOutput(System.IO.Stream output = null)
-	{
-		outputStream = output ?? Console.OpenStandardOutput();
-		outputIndex = 0;
-		outputBuffer = new byte[65535];
-		AppDomain.CurrentDomain.ProcessExit += delegate { Flush(); };
-	}
-
-	public static void WriteLine(object obj = null)
-	{
-		Write(obj);
-		Write('\n');
-	}
-
-	public static void WriteLine(long number)
-	{
-		Write(number);
-		Write('\n');
-	}
-
-	public static void Write(long signedNumber)
-	{
-		ulong number = (ulong)signedNumber;
-		if (signedNumber < 0)
-		{
-			Write('-');
-			number = (ulong)(-signedNumber);
+			result = ModPow(n, MOD - 2);
+			if (n < _inverse.Length)
+				_inverse[n] = (int)(result + 1);
+			return result;
 		}
 
-		Reserve(20 + 1); // 20 digits + 1 extra
-		int left = outputIndex;
-		do
+		public static long Mult(long left, long right)
 		{
-			outputBuffer[outputIndex++] = (byte)('0' + number % 10);
-			number /= 10;
+			return (left * right) % MOD;
 		}
-		while (number > 0);
 
-		int right = outputIndex - 1;
-		while (left < right)
+		public static long Div(long left, long divisor)
 		{
-			byte tmp = outputBuffer[left];
-			outputBuffer[left++] = outputBuffer[right];
-			outputBuffer[right--] = tmp;
+			return left % divisor == 0
+				? left / divisor
+				: Mult(left, Inverse(divisor));
 		}
+
+		public static long Subtract(long left, long right)
+		{
+			return (left + (MOD - right)) % MOD;
+		}
+
+		public static long Fix(long n)
+		{
+			return ((n % MOD) + MOD) % MOD;
+		}
+
+		public static long ModPow(long n, long p, long mod = MOD)
+		{
+			long b = n;
+			long result = 1;
+			while (p != 0)
+			{
+				if ((p & 1) != 0)
+					result = (result * b) % mod;
+				p >>= 1;
+				b = (b * b) % mod;
+			}
+			return result;
+		}
+
+		public static long Pow(long n, long p)
+		{
+			long b = n;
+			long result = 1;
+			while (p != 0)
+			{
+				if ((p & 1) != 0)
+					result *= b;
+				p >>= 1;
+				b *= b;
+			}
+			return result;
+		}
+
+		#endregion
+
+		#region Combinatorics
+		static List<long> _fact;
+		static List<long> _ifact;
+
+		public static long Fact(int n)
+		{
+			if (_fact == null) _fact = new List<long>(100) { 1 };
+			for (int i = _fact.Count; i <= n; i++)
+				_fact.Add(Mult(_fact[i - 1], i));
+			return _fact[n];
+		}
+
+		public static long InverseFact(int n)
+		{
+			if (_ifact == null) _ifact = new List<long>(100) { 1 };
+			for (int i = _ifact.Count; i <= n; i++)
+				_ifact.Add(Div(_ifact[i - 1], i));
+			return _ifact[n];
+		}
+
+		public static long Comb(int n, int k)
+		{
+			if (k <= 1) return k == 1 ? n : k == 0 ? 1 : 0;
+			if (k + k > n) return Comb(n, n - k);
+			return Mult(Mult(Fact(n), InverseFact(k)), InverseFact(n - k));
+		}
+
+		#endregion
+
+		#region Common
+
+		public static void Swap<T>(ref T a, ref T b)
+		{
+			var tmp = a;
+			a = b;
+			b = tmp;
+		}
+
+		public static void Clear<T>(T[] t, T value = default(T))
+		{
+			for (int i = 0; i < t.Length; i++)
+				t[i] = value;
+		}
+
+		public static int BinarySearch<T>(T[] array, T value, int left, int right, bool upper = false)
+			where T : IComparable<T>
+		{
+			while (left <= right)
+			{
+				int mid = left + (right - left) / 2;
+				int cmp = value.CompareTo(array[mid]);
+				if (cmp > 0 || cmp == 0 && upper)
+					left = mid + 1;
+				else
+					right = mid - 1;
+			}
+			return left;
+		}
+
+		#endregion
+
+
 	}
 
-	public static void Write(object obj)
+
+	public static class FastIO
 	{
-		if (obj == null) return;
+		#region  Input
+		static System.IO.Stream inputStream;
+		static int inputIndex, bytesRead;
+		static byte[] inputBuffer;
+		static System.Text.StringBuilder builder;
+		const int MonoBufferSize = 4096;
 
-		var s = obj.ToString();
-		Reserve(s.Length);
-		for (int i = 0; i < s.Length; i++)
-			outputBuffer[outputIndex++] = (byte)s[i];
+		public static void InitInput(System.IO.Stream input = null, int stringCapacity = 16)
+		{
+			builder = new System.Text.StringBuilder(stringCapacity);
+			inputStream = input ?? Console.OpenStandardInput();
+			inputIndex = bytesRead = 0;
+			inputBuffer = new byte[MonoBufferSize];
+		}
+
+		static void ReadMore()
+		{
+			inputIndex = 0;
+			bytesRead = inputStream.Read(inputBuffer, 0, inputBuffer.Length);
+			if (bytesRead <= 0) inputBuffer[0] = 32;
+		}
+
+		public static int Read()
+		{
+			if (inputIndex >= bytesRead) ReadMore();
+			return inputBuffer[inputIndex++];
+		}
+
+		public static T[] N<T>(int n, Func<T> func)
+		{
+			var list = new T[n];
+			for (int i = 0; i < n; i++) list[i] = func();
+			return list;
+		}
+
+		public static int[] Ni(int n)
+		{
+			var list = new int[n];
+			for (int i = 0; i < n; i++) list[i] = Ni();
+			return list;
+		}
+
+		public static long[] Nl(int n)
+		{
+			var list = new long[n];
+			for (int i = 0; i < n; i++) list[i] = Nl();
+			return list;
+		}
+
+		public static string[] Ns(int n)
+		{
+			var list = new string[n];
+			for (int i = 0; i < n; i++) list[i] = Ns();
+			return list;
+		}
+
+		public static int Ni()
+		{
+			var c = SkipSpaces();
+			bool neg = c == '-';
+			if (neg) { c = Read(); }
+
+			int number = c - '0';
+			while (true)
+			{
+				var d = Read() - '0';
+				if ((uint)d > 9) break;
+				number = number * 10 + d;
+			}
+			return neg ? -number : number;
+		}
+
+		public static long Nl()
+		{
+			var c = SkipSpaces();
+			bool neg = c == '-';
+			if (neg) { c = Read(); }
+
+			long number = c - '0';
+			while (true)
+			{
+				var d = Read() - '0';
+				if ((uint)d > 9) break;
+				number = number * 10 + d;
+			}
+			return neg ? -number : number;
+		}
+
+		public static char[] Nc(int n)
+		{
+			var list = new char[n];
+			for (int i = 0, c = SkipSpaces(); i < n; i++, c = Read()) list[i] = (char)c;
+			return list;
+		}
+
+		public static byte[] Nb(int n)
+		{
+			var list = new byte[n];
+			for (int i = 0, c = SkipSpaces(); i < n; i++, c = Read()) list[i] = (byte)c;
+			return list;
+		}
+
+		public static string Ns()
+		{
+			var c = SkipSpaces();
+			builder.Clear();
+			while (true)
+			{
+				if ((uint)c - 33 >= (127 - 33)) break;
+				builder.Append((char)c);
+				c = Read();
+			}
+			return builder.ToString();
+		}
+
+		public static int SkipSpaces()
+		{
+			int c;
+			do c = Read(); while ((uint)c - 33 >= (127 - 33));
+			return c;
+		}
+		#endregion
+
+		#region Output
+
+		static System.IO.Stream outputStream;
+		static byte[] outputBuffer;
+		static int outputIndex;
+
+		public static void InitOutput(System.IO.Stream output = null)
+		{
+			outputStream = output ?? Console.OpenStandardOutput();
+			outputIndex = 0;
+			outputBuffer = new byte[65535];
+			AppDomain.CurrentDomain.ProcessExit += delegate { Flush(); };
+		}
+
+		public static void WriteLine(object obj = null)
+		{
+			Write(obj);
+			Write('\n');
+		}
+
+		public static void WriteLine(long number)
+		{
+			Write(number);
+			Write('\n');
+		}
+
+		public static void Write(long signedNumber)
+		{
+			ulong number = (ulong)signedNumber;
+			if (signedNumber < 0)
+			{
+				Write('-');
+				number = (ulong)(-signedNumber);
+			}
+
+			Reserve(20 + 1); // 20 digits + 1 extra
+			int left = outputIndex;
+			do
+			{
+				outputBuffer[outputIndex++] = (byte)('0' + number % 10);
+				number /= 10;
+			}
+			while (number > 0);
+
+			int right = outputIndex - 1;
+			while (left < right)
+			{
+				byte tmp = outputBuffer[left];
+				outputBuffer[left++] = outputBuffer[right];
+				outputBuffer[right--] = tmp;
+			}
+		}
+
+		public static void Write(object obj)
+		{
+			if (obj == null) return;
+
+			var s = obj.ToString();
+			Reserve(s.Length);
+			for (int i = 0; i < s.Length; i++)
+				outputBuffer[outputIndex++] = (byte)s[i];
+		}
+
+		public static void Write(char c)
+		{
+			Reserve(1);
+			outputBuffer[outputIndex++] = (byte)c;
+		}
+
+		public static void Write(byte[] array, int count)
+		{
+			Reserve(count);
+			Array.Copy(array, 0, outputBuffer, outputIndex, count);
+			outputIndex += count;
+		}
+
+		static void Reserve(int n)
+		{
+			if (outputIndex + n <= outputBuffer.Length)
+				return;
+
+			Dump();
+			if (n > outputBuffer.Length)
+				Array.Resize(ref outputBuffer, Math.Max(outputBuffer.Length * 2, n));
+		}
+
+		static void Dump()
+		{
+			outputStream.Write(outputBuffer, 0, outputIndex);
+			outputIndex = 0;
+		}
+
+		public static void Flush()
+		{
+			Dump();
+			outputStream.Flush();
+		}
+
+		#endregion
 	}
-
-	public static void Write(char c)
+	class CaideConstants
 	{
-		Reserve(1);
-		outputBuffer[outputIndex++] = (byte)c;
+		public const string InputFile = null;
+		public const string OutputFile = null;
 	}
-
-	public static void Write(byte[] array, int count)
+	public class Program
 	{
-		Reserve(count);
-		Array.Copy(array, 0, outputBuffer, outputIndex, count);
-		outputIndex += count;
-	}
-
-	static void Reserve(int n)
-	{
-		if (outputIndex + n <= outputBuffer.Length)
-			return;
-
-		Dump();
-		if (n > outputBuffer.Length)
-			Array.Resize(ref outputBuffer, Math.Max(outputBuffer.Length * 2, n));
-	}
-
-	static void Dump()
-	{
-		outputStream.Write(outputBuffer, 0, outputIndex);
-		outputIndex = 0;
-	}
-
-	public static void Flush()
-	{
-		Dump();
-		outputStream.Flush();
-	}
-
-	#endregion
-}class CaideConstants {
-    public const string InputFile = null;
-    public const string OutputFile = null;
-}
-public class Program {
-    public static void Main(string[] args)
-    {
-        Solution solution = new Solution();
-        solution.solve(Console.OpenStandardInput(), Console.OpenStandardOutput());
+		public static void Main(string[] args)
+		{
+			Solution solution = new Solution();
+			solution.solve(Console.OpenStandardInput(), Console.OpenStandardOutput());
 
 #if DEBUG
-		Console.Error.WriteLine(System.Diagnostics.Process.GetCurrentProcess().TotalProcessorTime);
+			Console.Error.WriteLine(System.Diagnostics.Process.GetCurrentProcess().TotalProcessorTime);
 #endif
+		}
 	}
-}
 
+
+}

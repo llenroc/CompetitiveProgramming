@@ -43,12 +43,14 @@ public static partial class Library
 		return (left + (MOD - right)) % MOD;
 	}
 
-	public static long Fix(long n)
+	public static long Fix(long m)
 	{
-		return ((n % MOD) + MOD) % MOD;
+		var result = m % MOD;
+		if (result < 0) result += MOD;
+		return result;
 	}
 
-    public static long ModPow(long n, long p, long mod = MOD)
+	public static long ModPow(long n, long p, long mod = MOD)
 	{
 		long b = n;
 		long result = 1;
