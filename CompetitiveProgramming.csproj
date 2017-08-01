@@ -184,6 +184,14 @@
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode33\PatternCount.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode33\TransformToPalindrome.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode33\TwinArrays.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode34\MagicCards.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode34\MaximumGcdAndSum.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode34\PathStatistics.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode34\RecurrentOnATree.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode34\SameOccurrence-1.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode34\SameOccurrence-2.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode34\SameOccurrence-3.cs" />
+    <Compile Include="HackerRank\WeekOfCode\WeekOfCode34\SameOccurrence-4.cs" />
     <Compile Include="Library\FastInput.cs" />
     <Compile Include="Library\FastOutput.cs" />
     <Compile Include="Library\Library.cs" />
@@ -224,6 +232,11 @@
     <Content Include="HackerRank\WeekOfCode\WeekOfCode33\TransformToPalindrome.py" />
     <Content Include="HackerRank\WeekOfCode\WeekOfCode33\TwinArrays.cpp" />
     <Content Include="HackerRank\WeekOfCode\WeekOfCode33\TwinArrays.java" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode34\MaximumGcdAndSum.cpp" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode34\MaximumGcdAndSum.java" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode34\OnceInATram.java" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode34\SameOccurrence-2.java" />
+    <Content Include="HackerRank\WeekOfCode\WeekOfCode34\SameOccurrence.java" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
