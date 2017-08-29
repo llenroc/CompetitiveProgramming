@@ -64,7 +64,6 @@
     <Compile Include="HackerRank\AdInfinitum %28Math Contest%29\AdInfinitum18\PythagoreanTriple.cs" />
     <Compile Include="HackerRank\AdInfinitum %28Math Contest%29\AdInfinitum18\RationalSums.cs" />
     <Compile Include="HackerRank\AdInfinitum %28Math Contest%29\AdInfinitum18\Tower3Coloring.cs" />
-    <Compile Include="HackerRank\Codesprint\UniversityCodesprint1\CountingOnTrees.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint1\UniqueDivideAndConquer.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint1\WalkingTheApproximateLongestPath.cs" />
     <Compile Include="HackerRank\Codesprint\UniversityCodesprint1\BobAndBen.cs" />
@@ -136,7 +135,6 @@
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\MusicOnTheStreet.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\TastesLikeWinning.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode26\SatisfactoryPairs.cs" />
-    <Compile Include="HackerRank\Codesprint\UniversityCodesprint1\CountingOnTrees2.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode27\TailorShop.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode27\HackonacciMatrixRotations.cs" />
     <Compile Include="HackerRank\WeekOfCode\WeekOfCode27\ZeroMoveNim.cs" />
@@ -196,20 +194,6 @@
     <Compile Include="Library\FastOutput.cs" />
     <Compile Include="Library\Library.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProjectEuler\15. Lattice paths.cs" />
-    <Compile Include="ProjectEuler\14. Longest Collatz sequence.cs" />
-    <Compile Include="ProjectEuler\13. Large sum.cs" />
-    <Compile Include="ProjectEuler\12. Highly divisible triangular number.cs" />
-    <Compile Include="ProjectEuler\11. Largest product in a grid.cs" />
-    <Compile Include="ProjectEuler\10. Summation of primes.cs" />
-    <Compile Include="ProjectEuler\9. Special Pythagorean triplet.cs" />
-    <Compile Include="ProjectEuler\8. Largest product in a series.cs" />
-    <Compile Include="ProjectEuler\2. Even Fibonacci numbers.cs" />
-    <Compile Include="ProjectEuler\3. Largest prime factor.cs" />
-    <Compile Include="ProjectEuler\4. Largest palindrome product.cs" />
-    <Compile Include="ProjectEuler\5. Smallest multiple.cs" />
-    <Compile Include="ProjectEuler\7. 10001st prime.cs" />
-    <Compile Include="ProjectEuler\6. Sum square difference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="HackerRank\WeekOfCode\WeekOfCode32\CircularWalk.cpp" />
     <Content Include="HackerRank\WeekOfCode\WeekOfCode32\CircularWalk.java" />
@@ -257,7 +241,6 @@
     <None Include="HackerRank\WeekOfCode\WeekOfCode30\README.md" />
     <None Include="HackerRank\WeekOfCode\WeekOfCode31\README.md" />
     <None Include="Interviews\README.md" />
-    <Compile Include="ProjectEuler\1. MultiplesOf3And5.cs" />
     <None Include="Library\README.md" />
     <None Include="ProjectEuler\README.md" />
     <None Include="README.md" />
@@ -270,6 +253,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contests\" />
+    <Folder Include="HackerRank\Companies\OpenBracket\" />
     <Folder Include="Languages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
