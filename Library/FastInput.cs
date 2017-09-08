@@ -61,39 +61,42 @@ public static class FastInput
         return list;
     }
 
-    public static int Ni()
-    {
-        var c = SkipSpaces();
-        bool neg = c == '-';
-        if (neg) { c = Read(); }
+	public static int Ni()
+	{
+		var c = SkipSpaces();
+		bool neg = c == '-';
+		if (neg) { c = Read(); }
 
-        int number = c - '0';
-        while (true)
-        {
-            var d = Read() - '0';
-            if ((uint)d > 9) break;
-            number = number * 10 + d;
-        }
-        return neg ? -number : number;
-    }
+		int number = c - '0';
+		while (true)
+		{
+			var d = Read() - '0';
+			if ((uint)d > 9) break;
+			number = number * 10 + d;
+			if (number < 0) throw new FormatException();
+		}
+		return neg ? -number : number;
+	}
 
-    public static long Nl()
-    {
-        var c = SkipSpaces();
-        bool neg = c=='-';
-        if (neg) { c = Read(); }
+	public static long Nl()
+	{
+		var c = SkipSpaces();
+		bool neg = c == '-';
+		if (neg) { c = Read(); }
 
-        long number = c - '0';
-        while (true)
-        {
-            var d = Read() - '0';
-            if ((uint)d > 9) break;
-            number = number * 10 + d;
-        }
-        return neg ? -number : number;
-    }
+		long number = c - '0';
+		while (true)
+		{
+			var d = Read() - '0';
+			if ((uint)d > 9) break;
+			number = number * 10 + d;
+			if (number < 0) throw new FormatException();
+		}
+		return neg ? -number : number;
+	}
 
-    public static char[] Nc(int n)
+
+	public static char[] Nc(int n)
     {
         var list = new char[n];
         for (int i = 0, c = SkipSpaces(); i < n; i++, c = Read()) list[i] = (char)c;
