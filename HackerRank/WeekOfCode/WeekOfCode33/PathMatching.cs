@@ -1,3 +1,5 @@
+using System;
+
 namespace HackerRank.WeekOfCode33.PathMatching
 {
 	// https://www.hackerrank.com/contests/w33/challenges/path-matching
@@ -1036,5 +1038,8 @@ namespace HackerRank.WeekOfCode33.PathMatching
 			Console.Error.WriteLine(System.Diagnostics.Process.GetCurrentProcess().TotalProcessorTime);
 #endif
 		}
-	} 
+	}
 }
+
+
+

@@ -1,0 +1,16 @@
+#157
+Incorporate improvements to Pollard Rho back to library
+- Use of faster mods and 32-bit mods
+- Break if cycle is too long
+Pollard Rho Brent is too slow
+
+BigInteger Factorization
+
+Add factorization of squares
+	b^2 - a^2 = n
+	Useful for lamina and triangle problems
+	
+Routines for counting divisors without generating factors
+
+#153
+Add Stern-Brocot sequence generating code to library
