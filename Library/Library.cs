@@ -40,8 +40,11 @@ public static partial class Library
 
 	public static long Subtract(long left, long right)
 	{
-		return (left + (MOD - right)) % MOD;
+		var result = left - right;
+		if (result < 0) result += MOD;
+		return result;
 	}
+
 
 	public static long Fix(long m)
 	{

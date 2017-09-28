@@ -92,7 +92,6 @@
 						}
 				}
 
-				int pileSize;
 				// Remove amount j=1..min-1 from all pile
 				for (int j = min - 1; j >= 1 && !canWin; j--)
 				{

@@ -20,7 +20,6 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 		int k;
 		int[] r;
 		int maxk;
-		double[,] cache;
 		int partitions;
 		int maxPartitionSize;
 		int sizeLimit;

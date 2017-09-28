@@ -133,7 +133,7 @@ namespace HackerRank.WorldCodeSprint11.CityConstruction
 		int[] heights;
 		int[] group;
 
-		int n, m, sz;
+		int m, sz;
 
 		public int DfsHeight(int u)
 		{
@@ -223,14 +223,6 @@ namespace HackerRank.WorldCodeSprint11.CityConstruction
 			this.uf = new UnionFind(length);
 			this.length = length;
 			Vertices = new VData[length];
-		}
-
-		struct State
-		{
-			public int Node;
-			public int Parent;
-			public int Vertex;
-			public int Index;
 		}
 
 		public void RunScc()

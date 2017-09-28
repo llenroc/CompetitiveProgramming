@@ -1,167 +1,140 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Linq;
 using System.IO;
-using System.Collections.Generic;
+using System.Text;
 using static System.Array;
 using static System.Math;
 using static Library;
 
-//using T = Solution.Number;
-//using T = System.Double;
-using T = System.Int64;
-
 class Solution
 {
+    static long inv4 = Inverse(4);
+    static long inv6 = Inverse(6);
+    static long inv24 = Inverse(24);
+    
 	public void solve()
 	{
-		int n = Ni();
-		var a = Nl(n + 1);
+		int t = Ni();
 
+		var len = 1001;
+		/*long[,,] s = new long[len, len, 2];
 
-		var factors = new T[n + 1];
-		for (int i = 0; i <= n; i++)
+		for (long m = 1; m < len; m++)
 		{
-			long sum = 0;
-			for (int j = n; j >= 0; j--)
-				sum = (sum * (i + 1)) % MOD + a[j];
-			factors[i] = sum % MOD;
-		}
-
-		var array = factors.ToArray();
-		var list = new List<long>();
-		//Console.WriteLine(string.Join(" ", a));
-		//Console.WriteLine(string.Join(" ", factors));
-
-		var newton = new NewtonPolynomial(Enumerable.Range(1,n+1).Select(z=>1L*z).ToArray(), factors);
-		//var newton = new NewtonPolynomial();
-
-
-		double num = 1;
-		for (int x = 1; x <= n; x++)
-		{
-			//{
-			//	long result = 0;
-			//	int i = x - 1;
-			//	for (int j = 0; j < i; j++)
-			//	{
-			//		factors[j] = Div(Div(Mult(Mult(factors[j], x), x - 1 - j), j - i), x - j);
-			//		factors[i] = Mult(Mult(factors[i], (x - j)), Inverse(i - j));
-			//	}
-
-			//	//Console.WriteLine($"{x} -> " + string.Join(" ", (IEnumerable<long>)factors));
-
-			//	for (int j = 0; j < x; j++)
-			//	{
-			//		result += factors[j];
-			//		if (result > MOD)
-			//			result -= MOD;
-			//	}
-			//	list.Add(Fix(result));
-			//}
-
-
-			//newton.Add(x-1,factors[x-1]);
-			list.Add(Fix(newton.Interpolate(x+1,x)));
-
-			//int i = x - 1;
-			//for (int j = 0; j < i; j++)
-			//{
-			//	factors[j] = factors[j] * (x) * (x - 1 - j) / (j - i) / (x - j);
-			//	factors[i] = factors[i] * (x - j) / (i - j);
-			//}
-			//for (int j = 0; j < x; j++)
-			//	result += (double)factors[j];
-
-			//{
-			//	long result2 = 0;
-			//	for (int i = 0; i < x; i++)
-			//	{
-			//		factors2[i] = array[i];
-			//		for (int j = x - 1; j >= 0; j--)
-			//		{
-			//			if (j != i)
-			//				factors2[i] = Div(Mult(factors2[i], x - j), i - j);
-			//		}
-			//	}
-
-			//	//Console.WriteLine($"{x} -> " + string.Join(" ", (IEnumerable<long>)factors));
-
-			//	for (int j = 0; j < x; j++)
-			//	{
-			//		result2 += factors2[j];
-			//		if (result2 > MOD)
-			//			result2 -= MOD;
-			//	}
-			//	list2.Add(Fix(result2));
-			//}
-		}
-
-		WriteLine(string.Join(" ", list));
-		Flush();
-		//Console.Error.WriteLine("CMP\n" + string.Join(" ", list2));
-	}
-
-
-	public class NewtonPolynomial
-	{
-		readonly List<T> x;
-		readonly List<T> y;
-		int n;
-
-		public NewtonPolynomial()
-		{
-			n = 0;
-			x = new List<long>();
-			y = new List<long>();
-		}
-
-		public NewtonPolynomial(T[] xvalues, T[] yvalues)
-		{
-			n = xvalues.Length;
-			x = xvalues.ToList();
-			y = yvalues.ToList();
-
-			for (int j = 0; j < n; j++)
-				for (int i = n - 1; i > j; i--)
-					y[i] = Div(y[i] - y[i - 1], x[i] - x[i - j - 1]);
-		}
-
-		public void Add(T x0, T y0)
-		{
-			x.Add(x0);
-			y.Add(y0);
-			n++;
-
-			for (int j = 0; j < n-1; j++)
+			for (long n = 1; n <= m; n++)
 			{
-				int i = n - 1;
-				y[i] = Div(y[i] - y[i - 1], x[i] - x[i - j - 1]);
+				long sq = m * (m + 1) % MOD * n % MOD * (n + 1) % MOD * inv4 % MOD;
+				long sq2 = (2 * m - n) % MOD * (n * n % MOD * 4 - 1) % MOD - 3;
+				sq2 = Fix(sq2 * n % MOD * inv6);
+				s[m, n, 0] = sq;
+				s[m, n, 1] = sq2;
+				s[n, m, 0] = sq;
+				s[n, m, 1] = sq2;
 			}
 		}
 
-		public T Interpolate(int a, int n = 0)
+		for (int i = 1; i < len; i++)
 		{
-			if (n == 0) n = this.n;
-
-			T sum = 0;
-
-			var factors = new T[n];
-			T f = factors[0] = 1;
-			for (int i = 1; i < factors.Length; i++)
-				factors[i] = f = Mult(f, a - x[i-1]);
-
-			for (int i = n - 1; i >= 0; i--)
+			for (int j = 1; j < len; j++)
 			{
-				//T factor = 1;
-				//for (int j = 0; j < i; j++)
-				//	factor = Mult(factor, a - x[j]);
-				sum += Mult(factors[i], y[i]);
+				s[i, j, 0] = (s[i,j, 0] + s[i,j-1, 0]) % MOD;
+				s[i, j, 1] = (s[i,j, 1] + s[i,j-1, 1]) % MOD;
 			}
-			return sum % MOD;
 		}
 
+		for (int i = 1; i < len; i++)
+		{
+			for (int j = 1; j < len; j++)
+			{
+				s[i, j, 0] = (s[i, j, 0] + s[i-1, j, 0]) % MOD;
+				s[i, j, 1] = (s[i, j, 1] + s[i-1, j, 1]) % MOD;
+			}
+		}*/
+
+        /*
+        Console.Error.WriteLine("I:" + SumIFrom01ToN(4));
+        Console.Error.WriteLine("I2:" + SumI2From01ToN(4));
+        Console.Error.WriteLine("I3:" + SumI3From01ToN(4));
+        Console.Error.WriteLine("I4:" + SumI4From01ToN(4));
+        */
+        
+		while (t-- > 0)
+		{
+			long m = Nl(), n = Nl();
+			if (m < n) Swap(ref m, ref n);
+            
+            var term = inv4 * X(m) % MOD * X(n) % MOD;
+            //var term2a = Mult(-4, SumI4From01ToN(n)) + SumI2From01ToN(n) + Mult(-3, SumIFrom01ToN(n));
+            //var term2b = Mult(4, SumI3From01ToN(n)) - SumIFrom01ToN(n);
+            //var term2 = Mult(2,Mult(SumIFrom01ToN(m), Fix(term2b))) + Mult(m, Fix(term2a));
+            //term2 = Fix(term2) * inv6 % MOD;
+            
+            var a = n;
+            var b = m;
+            
+            // Up to Min(n,m) -- Multiply by 2
+            var term2x = Mult(a, a+1);
+            var term2y = a-1;
+            var term2a = term2y*Poly(a,2,2,-3,-8)%MOD;
+            // (a,a)
+            var term2b = term2y*Poly(a,4,10,9)%MOD;
+            var term2c = (b - a)%MOD*(Poly(a,2,8,7,-17)%MOD + b*Poly(a, 10, 10, -5)%MOD)%MOD;                
+                
+            var term2 = ((term2a + term2b)%MOD + Div(term2c, 2))%MOD;
+			term2 = Mult(term2x, Div(term2, 30));
+            
+            WriteLine($"{Fix(term)} {Fix(term2)} ");
+			//Console.Error.WriteLine($"Interpolation: {Fix(term)} {Fix(term2)}");
+            //Console.Error.WriteLine($"Correct: {Fix(s[m,n, 0])} {Fix(s[m,n, 1])}");
+            
+		}
 	}
+    
+    public long Poly(long n, params long[] array)
+    {
+        long result = 0;
+        foreach(var v in array)
+            result = (n*result%MOD + v) % MOD;
+        return result;
+    }
+    
+    public long X(long n)
+    {
+        return n * (n+1) % MOD * (2*n %MOD +4) % MOD * inv6 % MOD;
+    }
+
+    public static long SumIFrom01ToN(long n)
+    {
+        return Div(Mult(n, n + 1), 2);
+    }
+
+    public static long SumI2From01ToN(long n)
+    {
+        // Square Pyramidal Number
+        // Alternative, n * (n + 1) * (2 * n + 1) / 6;
+        // Alternative, n*n*n/3 + n*n/2 + n/6
+        return Mult(SumIFrom01ToN(n), Div(2 * n + 1, 3));
+    }
+
+    public static long SumI3From01ToN(long n)
+    {
+        // Alternative, n*n*n*n/4 + n*n*n/2 + n*n/4
+        var tmp = SumIFrom01ToN(n);
+        return Mult(tmp, tmp);
+    }
+
+    public static long SumI4From01ToN(long n)
+    {
+        // Alternative, n*n*n*n/4 + n*n*n/2 + n*n/4 (real numbers)
+        // Alternative, ((((6 * n + 15) * n + 10) * n) * n - 1) * n / 30;
+        return Mult(SumI2From01ToN(n), Div(Mult(3 * n, n + 1) - 1,5));
+
+    }    
+
 
 	#region Mod Math
 	public const int MOD = 1000 * 1000 * 1000 + 7;
@@ -172,9 +145,7 @@ class Solution
 		long result;
 
 		if (_inverse == null)
-			_inverse = new int[4000];
-
-		if (n < 0) return -Inverse(-n);
+			_inverse = new int[3000];
 
 		if (n < _inverse.Length && (result = _inverse[n]) != 0)
 			return result - 1;
@@ -238,32 +209,6 @@ class Solution
 	}
 
 	#endregion
-
-	public class RecordedNumber
-	{
-		public double Value;
-		public Operation Op;
-
-		public class Operation
-		{
-			public OperationType Type;
-			public object Operand1;
-			public object Operand2;
-		}
-
-		public enum OperationType
-		{
-			None,
-			Negation,
-			Plus,
-			Minus,
-			Times,
-			Divide,
-		}
-
-	}
-
-
 
 }
 
@@ -364,37 +309,39 @@ static partial class Library
 		return list;
 	}
 
-	public static int Ni()
-	{
-		var c = SkipSpaces();
-		bool neg = c == '-';
-		if (neg) { c = Read(); }
+    public static int Ni()
+    {
+        var c = SkipSpaces();
+        bool neg = c == '-';
+        if (neg) { c = Read(); }
 
-		int number = c - '0';
-		while (true)
-		{
-			var d = Read() - '0';
-			if ((uint)d > 9) break;
-			number = number * 10 + d;
-		}
+        int number = c - '0';
+        while (true)
+        {
+            var d = Read() - '0';
+            if ((uint)d > 9) break;
+            number = number * 10 + d;
+	        if (number < 0) throw new FormatException();
+        }
+        return neg ? -number : number;
+    }
+
+    public static long Nl()
+    {
+        var c = SkipSpaces();
+        bool neg = c=='-';
+        if (neg) { c = Read(); }
+
+        long number = c - '0';
+        while (true)
+        {
+            var d = Read() - '0';
+            if ((uint)d > 9) break;
+            number = number * 10 + d;
+	        if (number < 0) throw new FormatException();
+        }
 		return neg ? -number : number;
-	}
-
-	public static long Nl()
-	{
-		var c = SkipSpaces();
-		bool neg = c == '-';
-		if (neg) { c = Read(); }
-
-		long number = c - '0';
-		while (true)
-		{
-			var d = Read() - '0';
-			if ((uint)d > 9) break;
-			number = number * 10 + d;
-		}
-		return neg ? -number : number;
-	}
+    }
 
 	public static char[] Nc(int n)
 	{

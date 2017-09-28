@@ -11,7 +11,6 @@ namespace HackerRank.WorldCodeSprint10.PermutationHappiness
 	{
 		const int maxsize = 3000;
 		int[,] cache = new int[maxsize + 1, maxsize + 1];
-		int n;
 
 		long happy(int n, int k)
 		{

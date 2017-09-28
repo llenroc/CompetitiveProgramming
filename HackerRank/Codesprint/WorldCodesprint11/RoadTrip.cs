@@ -92,7 +92,6 @@ namespace HackerRank.WorldCodeSprint11.RoadTrip
 				WriteLine(answers[i]);
 		}
 
-		RangeMinimumQuery rmqPrices;
 		RangeMinimumQuery rmqNeeded;
 		RangeMinimumQuery rmqSupplied;
 		int[,] minPriceRange;

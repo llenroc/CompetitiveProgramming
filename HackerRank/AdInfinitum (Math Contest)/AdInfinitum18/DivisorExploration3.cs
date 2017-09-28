@@ -16,7 +16,6 @@ namespace HackerRank.AdInfinitum18.DivisorExploration3
 
 	public class Solution
 	{
-		int[] ps;
 		int[] es;
 		long[] answers;
 

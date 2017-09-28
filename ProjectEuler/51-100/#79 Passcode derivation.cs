@@ -1,271 +1,177 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.IO;
-using System.Collections.Generic;
+using System.Text;
 using static System.Array;
 using static System.Math;
 using static Library;
 
-//using T = Solution.Number;
-//using T = System.Double;
-using T = System.Int64;
-
 class Solution
 {
+	// public const int MOD = 1000000007;
+
+
+	int[] heights = new int[127];
+	bool[] instack = new bool[127];
+	private HashSet<char> letters = new HashSet<char>();
+	private HashSet<int>[] g = new HashSet<int>[127];
+
+
 	public void solve()
 	{
-		int n = Ni();
-		var a = Nl(n + 1);
+		int T = Ni();
 
-
-		var factors = new T[n + 1];
-		for (int i = 0; i <= n; i++)
+		for (int i = 0; i < g.Length; i++)
 		{
-			long sum = 0;
-			for (int j = n; j >= 0; j--)
-				sum = (sum * (i + 1)) % MOD + a[j];
-			factors[i] = sum % MOD;
+			g[i] = new HashSet<int>();
 		}
 
-		var array = factors.ToArray();
-		var list = new List<long>();
-		//Console.WriteLine(string.Join(" ", a));
-		//Console.WriteLine(string.Join(" ", factors));
-
-		var newton = new NewtonPolynomial(Enumerable.Range(1,n+1).Select(z=>1L*z).ToArray(), factors);
-		//var newton = new NewtonPolynomial();
-
-
-		double num = 1;
-		for (int x = 1; x <= n; x++)
+		while (T-- > 0)
 		{
-			//{
-			//	long result = 0;
-			//	int i = x - 1;
-			//	for (int j = 0; j < i; j++)
-			//	{
-			//		factors[j] = Div(Div(Mult(Mult(factors[j], x), x - 1 - j), j - i), x - j);
-			//		factors[i] = Mult(Mult(factors[i], (x - j)), Inverse(i - j));
-			//	}
-
-			//	//Console.WriteLine($"{x} -> " + string.Join(" ", (IEnumerable<long>)factors));
-
-			//	for (int j = 0; j < x; j++)
-			//	{
-			//		result += factors[j];
-			//		if (result > MOD)
-			//			result -= MOD;
-			//	}
-			//	list.Add(Fix(result));
-			//}
-
-
-			//newton.Add(x-1,factors[x-1]);
-			list.Add(Fix(newton.Interpolate(x+1,x)));
-
-			//int i = x - 1;
-			//for (int j = 0; j < i; j++)
-			//{
-			//	factors[j] = factors[j] * (x) * (x - 1 - j) / (j - i) / (x - j);
-			//	factors[i] = factors[i] * (x - j) / (i - j);
-			//}
-			//for (int j = 0; j < x; j++)
-			//	result += (double)factors[j];
-
-			//{
-			//	long result2 = 0;
-			//	for (int i = 0; i < x; i++)
-			//	{
-			//		factors2[i] = array[i];
-			//		for (int j = x - 1; j >= 0; j--)
-			//		{
-			//			if (j != i)
-			//				factors2[i] = Div(Mult(factors2[i], x - j), i - j);
-			//		}
-			//	}
-
-			//	//Console.WriteLine($"{x} -> " + string.Join(" ", (IEnumerable<long>)factors));
-
-			//	for (int j = 0; j < x; j++)
-			//	{
-			//		result2 += factors2[j];
-			//		if (result2 > MOD)
-			//			result2 -= MOD;
-			//	}
-			//	list2.Add(Fix(result2));
-			//}
+			var s = Ns();
+			for (int i = 1; i < s.Length; i++)
+				g[s[i - 1]].Add(s[i]);
+			foreach (var c in s)
+				letters.Add(c);
 		}
 
-		WriteLine(string.Join(" ", list));
-		Flush();
-		//Console.Error.WriteLine("CMP\n" + string.Join(" ", list2));
+		var result = LexicographicTopologicalSort(ToAdjacencyList(g));
+		if (result == null)
+		{
+			WriteLine("SMTH WRONG");
+			return;
+		}
+
+		var result2 = result.Select(x => (char)x).ToArray();
+		WriteLine(new string(result2.ToArray()));
+
+	}
+
+	List<int>[] ToAdjacencyList(HashSet<int>[] g)
+	{
+		var list = new List<int>[g.Length];
+		for (int i = 0; i < g.Length; i++)
+			list[i] = g[i]?.ToList();
+		return list;
 	}
 
 
-	public class NewtonPolynomial
+	List<int> LexicographicTopologicalSort(List<int>[] g)
 	{
-		readonly List<T> x;
-		readonly List<T> y;
-		int n;
-
-		public NewtonPolynomial()
+		int n = g.Length;
+		var counts = new int[n];
+		var queue = new SortedSet<int>();
+		for (int i = 0; i < n; i++)
 		{
-			n = 0;
-			x = new List<long>();
-			y = new List<long>();
+			foreach (var v in g[i])
+				counts[v]++;
 		}
 
-		public NewtonPolynomial(T[] xvalues, T[] yvalues)
+		for (int i = 0; i < n; i++)
 		{
-			n = xvalues.Length;
-			x = xvalues.ToList();
-			y = yvalues.ToList();
-
-			for (int j = 0; j < n; j++)
-				for (int i = n - 1; i > j; i--)
-					y[i] = Div(y[i] - y[i - 1], x[i] - x[i - j - 1]);
+			if (counts[i] != 0) continue;
+			// Isolated vertex
+			if (g[i].Count == 0) continue;
+			queue.Add(i);
 		}
 
-		public void Add(T x0, T y0)
-		{
-			x.Add(x0);
-			y.Add(y0);
-			n++;
+		var result = new List<int>(n);
 
-			for (int j = 0; j < n-1; j++)
+		while (queue.Count > 0)
+		{
+			var min = queue.Min();
+			queue.Remove(min);
+
+			foreach (var v in g[min])
 			{
-				int i = n - 1;
-				y[i] = Div(y[i] - y[i - 1], x[i] - x[i - j - 1]);
+				if (--counts[v] == 0)
+					queue.Add(v);
 			}
+
+			result.Add(min);
 		}
 
-		public T Interpolate(int a, int n = 0)
+        for (int i = 0; i < n; i++)
 		{
-			if (n == 0) n = this.n;
+			if (counts[i] > 0)
+				return null;
+		}
+        
+		return result;
+	}
 
-			T sum = 0;
+	List<int> TopologicalSort(List<int>[] g)
+	{
+		int n = g.Length;
+		var counts = new int[n];
+		var queue = new Queue<int>();
+		for (int i = 0; i < n; i++)
+		{
+			foreach (var v in g[i])
+				counts[v]++;
+		}
 
-			var factors = new T[n];
-			T f = factors[0] = 1;
-			for (int i = 1; i < factors.Length; i++)
-				factors[i] = f = Mult(f, a - x[i-1]);
+		for (int i = 0; i < n; i++)
+		{
+			if (counts[i] != 0) continue;
+			// Isolated vertex
+			if (g[i].Count == 0) continue;
+			queue.Enqueue(i);
+		}
 
-			for (int i = n - 1; i >= 0; i--)
+		var result = new List<int>(n);
+
+		while (queue.Count > 0)
+		{
+			var min = queue.Dequeue();
+
+			foreach (var v in g[min])
 			{
-				//T factor = 1;
-				//for (int j = 0; j < i; j++)
-				//	factor = Mult(factor, a - x[j]);
-				sum += Mult(factors[i], y[i]);
+				if (--counts[v] == 0)
+					queue.Enqueue(v);
 			}
-			return sum % MOD;
+
+			result.Add(min);
 		}
 
-	}
+		for (int i = 0; i < n; i++)
+		{
+			if (counts[i] > 0)
+				return null;
+		}
 
-	#region Mod Math
-	public const int MOD = 1000 * 1000 * 1000 + 7;
-
-	static int[] _inverse;
-	public static long Inverse(long n)
-	{
-		long result;
-
-		if (_inverse == null)
-			_inverse = new int[4000];
-
-		if (n < 0) return -Inverse(-n);
-
-		if (n < _inverse.Length && (result = _inverse[n]) != 0)
-			return result - 1;
-
-		result = ModPow(n, MOD - 2);
-		if (n < _inverse.Length)
-			_inverse[n] = (int)(result + 1);
 		return result;
 	}
 
-	public static long Mult(long left, long right)
-	{
-		return (left * right) % MOD;
-	}
 
-	public static long Div(long left, long divisor)
-	{
-		return left % divisor == 0
-			? left / divisor
-			: Mult(left, Inverse(divisor));
-	}
 
-	public static long Subtract(long left, long right)
+	int Dfs(int i)
 	{
-		return (left + (MOD - right)) % MOD;
-	}
+		if (instack[i]) return -1;
+		if (heights[i] != 0) return heights[i];
 
-	public static long Fix(long m)
-	{
-		var result = m % MOD;
-		if (result < 0) result += MOD;
-		return result;
-	}
-
-	public static long ModPow(long n, long p, long mod = MOD)
-	{
-		long b = n;
-		long result = 1;
-		while (p != 0)
+		instack[i] = true;
+		int height = 0;
+		foreach (var c in g[i])
 		{
-			if ((p & 1) != 0)
-				result = (result * b) % mod;
-			p >>= 1;
-			b = (b * b) % mod;
-		}
-		return result;
-	}
-
-	public static long Pow(long n, long p)
-	{
-		long b = n;
-		long result = 1;
-		while (p != 0)
-		{
-			if ((p & 1) != 0)
-				result *= b;
-			p >>= 1;
-			b *= b;
-		}
-		return result;
-	}
-
-	#endregion
-
-	public class RecordedNumber
-	{
-		public double Value;
-		public Operation Op;
-
-		public class Operation
-		{
-			public OperationType Type;
-			public object Operand1;
-			public object Operand2;
+			var h = Dfs(c);
+			if (h == -1) return -1;
+			if (h > height) height = h;
 		}
 
-		public enum OperationType
-		{
-			None,
-			Negation,
-			Plus,
-			Minus,
-			Times,
-			Divide,
-		}
-
+		instack[i] = false;
+		height++;
+		heights[i] = height;
+		return height;
 	}
-
-
 
 }
+
+
 
 
 class CaideConstants {
@@ -364,37 +270,39 @@ static partial class Library
 		return list;
 	}
 
-	public static int Ni()
-	{
-		var c = SkipSpaces();
-		bool neg = c == '-';
-		if (neg) { c = Read(); }
+    public static int Ni()
+    {
+        var c = SkipSpaces();
+        bool neg = c == '-';
+        if (neg) { c = Read(); }
 
-		int number = c - '0';
-		while (true)
-		{
-			var d = Read() - '0';
-			if ((uint)d > 9) break;
-			number = number * 10 + d;
-		}
+        int number = c - '0';
+        while (true)
+        {
+            var d = Read() - '0';
+            if ((uint)d > 9) break;
+            number = number * 10 + d;
+	        if (number < 0) throw new FormatException();
+        }
+        return neg ? -number : number;
+    }
+
+    public static long Nl()
+    {
+        var c = SkipSpaces();
+        bool neg = c=='-';
+        if (neg) { c = Read(); }
+
+        long number = c - '0';
+        while (true)
+        {
+            var d = Read() - '0';
+            if ((uint)d > 9) break;
+            number = number * 10 + d;
+	        if (number < 0) throw new FormatException();
+        }
 		return neg ? -number : number;
-	}
-
-	public static long Nl()
-	{
-		var c = SkipSpaces();
-		bool neg = c == '-';
-		if (neg) { c = Read(); }
-
-		long number = c - '0';
-		while (true)
-		{
-			var d = Read() - '0';
-			if ((uint)d > 9) break;
-			number = number * 10 + d;
-		}
-		return neg ? -number : number;
-	}
+    }
 
 	public static char[] Nc(int n)
 	{
