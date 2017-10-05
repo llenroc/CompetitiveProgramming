@@ -19,10 +19,10 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 		int n;
 		int k;
 		int[] r;
-		int maxk;
+		//int maxk;
 		int partitions;
 		int maxPartitionSize;
-		int sizeLimit;
+		//int sizeLimit;
 		int nLimit;
 		#endregion
 

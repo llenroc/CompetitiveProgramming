@@ -14,3 +14,13 @@ Routines for counting divisors without generating factors
 
 #153
 Add Stern-Brocot sequence generating code to library
+
+#73
+Use Moebius inversion
+
+#172
+Montgomery reduction in NTT to use arbitrary moduli without resorting to Chinese remainder theorem
+https://www.nayuki.io/page/montgomery-reduction-algorithm
+
+Finding Roots of Polynomials
+https://crypto.stanford.edu/pbc/notes/ep/root.html

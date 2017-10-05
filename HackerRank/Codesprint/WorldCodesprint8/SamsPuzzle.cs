@@ -18,7 +18,7 @@
 			Report(moves.ToList());
 		}
 
-		static int[][] puzzle;
+		//static int[][] puzzle;
 		private static bool movesReported;
 		private static Move bestMoves;
 		private static System.Threading.Timer timer;

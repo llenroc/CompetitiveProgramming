@@ -1,248 +1,97 @@
-﻿using System;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.IO;
-using System.Collections.Generic;
-using Microsoft.Win32;
+using System.Text;
 using static System.Array;
 using static System.Math;
 using static Library;
 
 class Solution
 {
+	// public const int MOD = 1000000007;
+
 	public void solve()
 	{
+		int q = Ni();
 
-		int lo = 0;
-		int hi = 1000099;
-		BitArray primes = GetPrimeSet(lo, hi);
-
-		int t = Ni();
-		while (t-- > 0)
+		while (q-- > 0)
 		{
-			int L = Ni(), R = Ni();
+			int n = Ni();
 
-			if (primes == null || !(lo <= L && R <= hi))
+			int[,] grid = new int[n + 1, n + 1];
+
+			for (var i = 0; i < n; i++)
 			{
-				lo = L;
-				hi = L + 1000099;
-				primes = GetPrimeSet(lo, hi);
+				var row = Ns();
+				for (var j = 0; j < n; j++)
+				{
+					var c = row[j];
+					if (c == 'X') grid[i, j] = -1;
+					else if (c == 'K') grid[i, j] = 1;
+				}
 			}
 
-			long sum = 0;
-			long p = -1;
-			for (long p2 = Max(L,lo); p2<=hi; p2++)
-			{
-				if (!primes[(int)(p2-lo)]) continue;
+			int[,] sg = new int[n + 1, n + 1];
+			int xor = 0;
 
-				if (p < L)
+			var hashset = new HashSet<int>();
+			for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++)
+			{
+				if (grid[i, j] == -1)
 				{
-					p = p2;
+					sg[i, j] = -1;
 					continue;
 				}
 
+				hashset.Clear();
+				if (i > 0) hashset.Add(sg[i - 1, j]);
+				if (j > 0) hashset.Add(sg[i, j - 1]);
+				if (i > 0 && j > 0) hashset.Add(sg[i - 1, j - 1]);
 
-				long pow = 10;
-				while (pow <= p) pow *= 10;
+				int g = 0;
+				while (hashset.Contains(g))
+					g++;
 
-				long y = Mult(Pow(p2, (pow/10<<2)-1, pow), p, pow);
-				var ans1 =y * p2;
-
-				long x = Mult(Pow(pow, p2 - 2, p2), (p2 - p), p2);
-				var ans2 = x * pow + p;
-				sum += Min(ans1, ans2);
-
-				//Console.Error.WriteLine($"{p}+{p2} -> {ans1}  {ans2}");
-
-				p = p2;
-				if (p > R) break;
+				sg[i, j] = g;
+				if (grid[i, j] == 1)
+					xor ^= g;
 			}
 
-			WriteLine(sum);
 
-		}
-
-	}
-
-	public static BitArray GetPrimeSet(long lo, long hi)
-	{
-		if (hi < lo)
-			throw new ArgumentOutOfRangeException();
-
-		if (lo == 0 && hi < Int32.MaxValue)
-			return GetPrimeSet((int)hi);
-
-		int range = (int)(hi - lo + 1);
-		var check = new BitArray(range, true);
-
-		// Mark all numbers less than 2 as composite
-		for (long i = lo; i < 2; i++)
-			check[(int)(i - lo)] = false;
-
-		// Mark all even numbers as composite
-		for (long i = Max(lo + (lo & 1), 4); i <= hi; i += 2)
-			check[(int)(i - lo)] = false;
-
-		int sqrt = (int)Ceiling(Sqrt(hi));
-		var primes = GetPrimeSet(sqrt);
-		for (int i = 3; i <= sqrt; i += 2)
-		{
-			if (primes[i])
+			if (xor == 0)
 			{
-				// Use longs here to avoid overflow
-				long start = Max(lo, i);
-				for (long j = start + i - (start % i); j <= hi; j += i)
-					check[(int)(j - lo)] = false;
+				WriteLine("LOSE");
+				continue;
 			}
-		}
-		return check;
-	}
-	public static long Pow(long n, long p, long mod)
-	{
-		long result = 1;
-		long b = n;
-		while (p > 0)
-		{
-			if ((p & 1) == 1) result = Mult(result,b,mod);
-			p >>= 1;
-			b = Mult(b,b, mod);
-		}
-		return result;
-	}
 
-	public static long Mult(long a, long b, long mod)
-	{
-		// Ten times faster than MultSlow
-		if ((ulong)(a) >= (ulong)mod) a %= mod;
-		if (a < 0) a += mod;
-		if ((ulong)(b) >= (ulong)mod) b %= mod;
-		if (b < 0) b += mod;
-
-		long ret = 0;
-		int step = 62 - Log2(mod);
-		for (int x = Log2(b); x >= 0; x -= step)
-		{
-			int shift = Min(x + 1, step);
-			ret <<= shift;
-			ret %= mod;
-			ret += a * ((long)((ulong)b >> (x - shift + 1)) & (1L << shift) - 1);
-			ret %= mod;
-		}
-		return ret;
-	}
-
-	public static int Log2(long value)
-	{
-		// UNTESTED
-		var log = 0;
-		if ((ulong)value >= (1UL << 24))
-		{
-			if ((ulong)value >= (1UL << 48))
+			int moves = 0;
+			var list = new List<int>();
+			for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++)
 			{
-				log = 48;
-				value = (long)((ulong)value >> 48);
+				if (grid[i, j] != 1)
+					continue;
+
+				list.Clear();
+				if (i > 0) list.Add(sg[i - 1, j]);
+				if (j > 0) list.Add(sg[i, j - 1]);
+				if (i > 0 && j > 0) list.Add(sg[i - 1, j - 1]);
+
+				int xor2 = sg[i, j] ^ xor;
+				foreach (var v in list)
+				{
+					if (v != -1 && (xor2 ^ v) == 0)
+						moves++;
+				}
 			}
-			else
-			{
-				log = 24;
-				value >>= 24;
-			}
+
+			WriteLine($"WIN {moves}");
 		}
-		if (value >= (1 << 12))
-		{
-			log += 12;
-			value >>= 12;
-		}
-		if (value >= (1 << 6))
-		{
-			log += 6;
-			value >>= 6;
-		}
-		if (value >= (1 << 3))
-		{
-			log += 3;
-			value >>= 3;
-		}
-		return log + (int)(value >> 1 & ~value >> 2);
 	}
-
-	public int Log10(long x)
-	{
-		int count = 0;
-		if (x >= 1000L * 1000L)
-		{
-			if (x >= 1000L * 1000L * 1000L * 1000L)
-			{
-				count = 16;
-				x /= 1000L * 1000L * 1000L * 1000L;
-			}
-			else
-			{
-				count = 8;
-				x /= 1000L * 1000L;
-			}
-		}
-		if (x >= 10000)
-		{
-			count += 4;
-			x /= 10000;
-		}
-		if (x >= 100)
-		{
-			count += 2;
-			x /= 100;
-		}
-		if (x >= 10)
-		{
-			count += 1;
-		}
-		return count;
-	}
-
-
-	public static BitArray GetPrimeSet(int max)
-	{
-		var isPrime = new BitArray(max + 1, true)
-		{
-			[0] = false,
-			[1] = false
-		};
-
-		// Should be 4
-		for (int i = 4; i <= max; i += 2)
-			isPrime[i] = false;
-
-		var limit = (int)Sqrt(max) + 1;
-		//for (int i = 3; i <= max; i += 2)
-		for (int i = 3; i < limit; i += 2)
-		{
-			if (!isPrime[i]) continue;
-			// NOTE: Squaring causes overflow
-			for (long j = (long)i * i; j <= max; j += i + i)
-				isPrime[(int)j] = false;
-		}
-
-		return isPrime;
-	}
-
-	public static int[] GetPrimes(int max)
-	{
-		var isPrime = GetPrimeSet(max);
-		int count = 1;
-		for (int i = 3; i <= max; i += 2)
-			if (isPrime[i])
-				count++;
-
-		var primes = new int[count];
-		int p = 0;
-		primes[p++] = 2;
-		for (int i = 3; i <= max; i += 2)
-			if (isPrime[i])
-				primes[p++] = i;
-		return primes;
-	}
-
 }
 
 
@@ -342,37 +191,39 @@ static partial class Library
 		return list;
 	}
 
-	public static int Ni()
-	{
-		var c = SkipSpaces();
-		bool neg = c == '-';
-		if (neg) { c = Read(); }
+    public static int Ni()
+    {
+        var c = SkipSpaces();
+        bool neg = c == '-';
+        if (neg) { c = Read(); }
 
-		int number = c - '0';
-		while (true)
-		{
-			var d = Read() - '0';
-			if ((uint)d > 9) break;
-			number = number * 10 + d;
-		}
+        int number = c - '0';
+        while (true)
+        {
+            var d = Read() - '0';
+            if ((uint)d > 9) break;
+            number = number * 10 + d;
+	        if (number < 0) throw new FormatException();
+        }
+        return neg ? -number : number;
+    }
+
+    public static long Nl()
+    {
+        var c = SkipSpaces();
+        bool neg = c=='-';
+        if (neg) { c = Read(); }
+
+        long number = c - '0';
+        while (true)
+        {
+            var d = Read() - '0';
+            if ((uint)d > 9) break;
+            number = number * 10 + d;
+	        if (number < 0) throw new FormatException();
+        }
 		return neg ? -number : number;
-	}
-
-	public static long Nl()
-	{
-		var c = SkipSpaces();
-		bool neg = c == '-';
-		if (neg) { c = Read(); }
-
-		long number = c - '0';
-		while (true)
-		{
-			var d = Read() - '0';
-			if ((uint)d > 9) break;
-			number = number * 10 + d;
-		}
-		return neg ? -number : number;
-	}
+    }
 
 	public static char[] Nc(int n)
 	{

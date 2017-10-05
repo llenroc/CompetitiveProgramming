@@ -32,7 +32,7 @@ namespace HackerRank.WeekOfCode33.BonnieAndClyde
 
 		LowestCommonAncestor lcaOld;
 		private TreeGraph old;
-		TreeGraph tree;
+		//TreeGraph tree;
 		private HashSet<int>[] cutpointNeighbors;
 
 		int n, m, q;
@@ -312,7 +312,7 @@ namespace HackerRank.WeekOfCode33.BonnieAndClyde
 		long time = 1;
 		long[] visited;
 		int[] parent;
-		int[] depth;
+		//int[] depth;
 		Queue<int> queue = new Queue<int>(100001);
 
 		int[] banned;

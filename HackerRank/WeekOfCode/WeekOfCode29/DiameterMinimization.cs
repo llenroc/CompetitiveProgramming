@@ -647,7 +647,6 @@ namespace HackerRank.WeekOfCode29.DiameterMinimization
 			}
 
 
-
 			public static Graph RandomGraph2(int n, int degree)
 			{
 				var g = new Graph(n, degree);
