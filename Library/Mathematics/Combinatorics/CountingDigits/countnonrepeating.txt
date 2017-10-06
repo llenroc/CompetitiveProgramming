@@ -1,0 +1,189 @@
+int countNonRepeating(int number);
+int fact(int n, int d);
+
+void countNumbers(vector < vector < int > > arr) {
+    for (int i=0; i<arr.size(); i++)
+    {
+        int lo = arr[i][0];
+        int hi = arr[i][1];
+        int result = countNonRepeating(hi) - countNonRepeating(lo-1);
+        cout << result << endl;
+    }
+}
+
+int countNonRepeating(int number)
+{
+    if (number<0) return 0;
+    if (number==0) return 1;
+    
+    int count = 1;
+    int digits = 0;
+    int start = 1;
+    
+    while (number >= start*10)
+    {
+        // All combinations of uniques digits starting with nonzero number [1-9][0-9]{digits}
+        count += 9 * fact(9,digits);
+        start *= 10;
+        digits++;
+    }
+
+    auto window = start;
+    vector<bool> used(10,false);
+    int digitsAvailable = 9;
+    while (true)
+    {
+        for (; number >= start + window; start += window)
+        {
+            if (!used[start/window % 10])
+                count += fact(digitsAvailable, digits);
+        }
+        
+        // every number after start will have a repeating digit
+        int d = start/window % 10;
+        if (used[d]) break; 
+        used[d] = true;
+
+        if (window == 1)
+        {
+            count++;
+            break;
+        }
+
+        window /= 10;
+        digitsAvailable--;
+        digits--;
+    }
+    
+    return count;
+}
+
+int fact(int n, int d)
+{
+    int result = 1;
+    for (int i=0; i<d; i++)
+        result *= n-i;
+    return result;
+}
+
+int countNonRepeating(int number);
+int fact(int n, int d);
+
+void countNumbers(vector < vector < int > > arr) {
+    for (int i=0; i<arr.size(); i++)
+    {
+        int lo = arr[i][0];
+        int hi = arr[i][1];
+        int result = countNonRepeating(hi) - countNonRepeating(lo-1);
+        cout << result << endl;
+    }
+}
+
+int countNonRepeating(int number)
+{
+    if (number<0) return 0;
+    if (number==0) return 1;
+    
+    int count = 1;
+    int digits = 0;
+    int start = 1;
+    
+    while (number >= start*10)
+    {
+        // All combinations of uniques digits starting with nonzero number [1-9][0-9]{digits}
+        count += 9 * fact(9,digits);
+        start *= 10;
+        digits++;
+    }
+
+    auto window = start;
+    vector<bool> used(10,false);
+    int digitsAvailable = 9;
+    while (true)
+    {
+        for (; number >= start + window; start += window)
+        {
+            if (!used[start/window % 10])
+                count += fact(digitsAvailable, digits);
+        }
+        
+        // every number after start will have a repeating digit
+        int d = start/window % 10;
+        if (used[d]) break; 
+        used[d] = true;
+
+        if (window == 1)
+        {
+            count++;
+            break;
+        }
+
+        window /= 10;
+        digitsAvailable--;
+        digits--;
+    }
+    
+    return count;
+}
+
+int fact(int n, int d)
+{
+    int result = 1;
+    for (int i=0; i<d; i++)
+        result *= n-i;
+    return result;
+}
+
+Ashley Loves Numbers
+Ashley loves Numbers—but only the ones without repeating digits. For example, she loves 12 but hates 11. Given two integers, n and m, Ashley wants to find the count, c, of numbers she will love that are in the inclusive range between n and m.
+ 
+Complete the countNumbers function in your editor. It has 1 parameter: a 2D array of integers, arr, containing q rows of n and m values. For each row i in arr (where 0 = i < q), the function must print the count (ci) of integers having no repeated digits in the inclusive range between ni and mi.
+ 
+Input Format
+The locked stub code in your editor reads the following input from stdin and passes it to your function:
+The first line contains an integer, q, denoting the number of rows in arr.
+The second line contains an integer, 2, denoting the number of columns in arr.
+Each line i of the q subsequent lines (where 0 = i < q) contains 2 space-separated integers describing the respective values of ni and mi for row i in arr.
+ 
+Constraints
+1 = q = 105
+1 = n = m = 106
+ 
+Output Format
+For each row i in arr, your function must print the count, ci, of numbers Ashley loves in the inclusive range between ni and mi on a new line.
+ 
+Sample Input 1
+The following argument is passed to your function: arr = [ [1, 20], [9, 19] ]
+ 
+Sample Output 1
+19
+10
+ 
+Explanation 1
+Row 0 = [1, 20]
+The set of qualifying numbers in the inclusive range between n0 = 1 and m0 = 20 is {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20}. This gives us c0 = 19, so we print 19 on a new line.
+ 
+Row 1: [9, 19]
+The set of qualifying numbers in the inclusive range between n1 = 9 and m1 = 19 is {9, 10, 12, 13, 14, 15, 16, 17, 18, 19}. This gives us c1 = 10, so we print 10 on a new line.
+ 
+Sample Input 2
+The following argument is passed to your function: arr = [ [7, 8], [52, 80], [57, 64], [74, 78] ]
+ 
+Sample Output 2
+2
+26
+8
+4
+ 
+Explanation 2
+Row 0 = [7, 8]
+The set of qualifying numbers in the inclusive range between n0 = 7 and m0 = 8 is {7, 8}. This gives us c0 = 2, so we print 2 on a new line.
+ 
+Row 1 = [52, 80]
+The set of qualifying numbers in the inclusive range between n1 = 52 and m1 = 80 is {52, 53, 54, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 78, 79, 80}. This gives us c1 = 26, so we print 26 on a new line.
+ 
+Row 2 = [57, 64]
+The set of qualifying numbers in the inclusive range between n2 = 57 and m2 = 64 is {57, 58, 59, 60, 61, 62, 63, 64}. This gives us c2 = 8, so we print 8 on a new line.
+ 
+Row 3 = [74, 78]
+The set of qualifying numbers in the inclusive range between n3 = 74 and m3 = 78 is {74, 75, 76, 78}. This gives us c3 = 4, so we print 4 on a new line.
