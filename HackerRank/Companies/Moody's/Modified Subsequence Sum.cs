@@ -1,146 +1,162 @@
-//https://www.hackerrank.com/contests/infinitum18/challenges/count-solutions
+#define BEST
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
-using static FastIO;
-using static System.Math;
 using static System.Array;
+using static System.Math;
+using static Library;
+using T = System.Decimal;
 
-public class Solution
+class Solution
 {
-	public void solve(Stream input, Stream output)
+	// public const int MOD = 1000000007;
+
+	private int n;
+	private int k;
+	private long[] A;
+
+	public void solve()
 	{
-		InitInput(input);
-		InitOutput(output);
-		solveQ();
-		Flush();
+		n = Ni();
+		decimal k = Ni();
+		A = Nl(n);
+
+		var cvo = new ConvexHullOptimization(true, n);
+		decimal result = long.MinValue;
+		bool first = true;
+
+		var s = -1;
+		for (decimal i = 0; i < n; i++)
+		{
+			var prev = first == false ? cvo.GetExtremum(i) - k * i * i : 0;
+			decimal answer = A[(int)i] + Max(0m, prev);
+			// - k * (i - i2 - 1)^2 = -(i2^2 - 2 * i*i2 + i^2 - 2*i + 2*i2 + 1) * k 
+			cvo.AddLine(x=> answer - k * (x-i-1)*(x-i-1) + k*x*x);
+			result = Max(answer, result);
+			first = false;
+		}
+
+		WriteLine(result);
 	}
-
-	public void solve(int a, int b, int c, int d)
-	{
-		int count = 0;
-		int x = 0;
-		long xxma = 0;
-		int sign = 1;
-
-		Action<int> func = y =>
-		{
-			if (y > d) return;
-			if (xxma == y * 1L * (b - y))
-				count++;
-		};
-
-		for (x = 1; x <= c; x++)
-		{
-			xxma = x * 1L * (x - a);
-			sign = xxma < 0 ? -1 : 1;
-
-			if (xxma != 0)
-			{
-				EnumerateFactors(factors, x, (x-a)*sign, d, func);
-			}
-			else
-			{
-				if (b >= 1 && b <= d)
-					count++;
-			}
-		}
-
-		WriteLine(count);
-	}
-
-	int[] factors = PrimeFactorsUpTo(100000);
-
-	public void solveQ()
-	{
-		int q = Ni();
-		while (q-- > 0)
-		{
-			int a = Ni();
-			int b = Ni();
-			int c = Ni();
-			int d = Ni();
-			solve(a,b,c,d);
-		}
-	}
-
-	public static int EnumerateFactors(int[] factors, int n1, int n2, int max, Action<int> action = null, int f = 1)
-	{
-		if (f > max)
-			return 0;
-
-		if (n1 == 1 && n2 == 1)
-		{
-			action?.Invoke(f);
-			return 1;
-		}
-
-		int p1 = factors[n1];
-		int p2 = factors[n2];
-		int p = n1==1 ? p2 : n2 ==1 ? p1 : Min(p1, p2);
-
-		int c = 0;
-		int next1 = n1;
-		int next2 = n2;
-
-		while (next1 > 1 && factors[next1] == p)
-		{
-			c++;
-			next1 /= p;
-		}
-
-		while (next2 > 1 && factors[next2] == p)
-		{
-			c++;
-			next2 /= p;
-		}
-
-		int result = EnumerateFactors(factors, next1, next2, max, action, f);
-		while (c-- > 0)
-		{
-			f *= p;
-			result += EnumerateFactors(factors, next1, next2, max, action, f);
-		}
-
-		return result;
-	}
-
-	public static int[] PrimeFactorsUpTo(int n)
-	{
-		var factors = new int[n + 1];
-
-		for (int i = 2; i <= n; i += 2)
-			factors[i] = 2;
-
-		var sqrt = (int)Math.Sqrt(n);
-		for (int i = 3; i <= sqrt; i += 2)
-		{
-			if (factors[i] != 0) continue;
-			for (int j = i * i; j <= n; j += i + i)
-			{
-				if (factors[j] == 0)
-					factors[j] = i;
-			}
-		}
-
-		for (int i = 3; i <= n; i += 2)
-		{
-			if (factors[i] == 0)
-				factors[i] = i;
-		}
-
-		return factors;
-	}
-
 
 }
 
-public static class FastIO
+
+public class ConvexHullOptimization
 {
+	T[] A;
+	T[] B;
+	int length;
+	int index;
+	bool max = true;
+
+	public ConvexHullOptimization(bool max, int size = 4)
+	{
+		A = new T[size];
+		B = new T[size];
+		this.max = max;
+	}
+
+	// a descends
+	public void AddLine(T a, T b)
+	{
+		if (max)
+		{
+			a = -a;
+			b = -b;
+		}
+
+		// intersection of (A[len-2],B[len-2]) with (A[len-1],B[len-1]) must lie to the left of intersection of (A[len-1],B[len-1]) with (a,b)
+		while (length >= 2 &&
+			(B[length - 2] - B[length - 1]) * (a - A[length - 1])
+				>= (B[length - 1] - b) * (A[length - 1] - A[length - 2]))
+		{
+			--length;
+		}
+
+		if (length >= A.Length)
+		{
+			Resize(ref A, 2 * length);
+			Resize(ref B, 2 * length);
+		}
+
+		A[length] = a;
+		B[length] = b;
+		++length;
+	}
+
+	public void AddLine(Func<T, T> exp)
+	{
+		var y1 = exp(0);
+		var y2 = exp(1);
+		AddLine(y2 - y1, y1);
+	}
+
+	// x ascends
+	public T GetExtremum(T x)
+	{
+		index = Min(index, length - 1);
+		while (index + 1 < length && A[index + 1] * x + B[index + 1] <= A[index] * x + B[index])
+		{
+			++index;
+		}
+
+		var answer = A[index] * x + B[index];
+		if (max)
+			answer = -answer;
+
+		return answer;
+	}
+}
+
+class CaideConstants {
+    public const string InputFile = null;
+    public const string OutputFile = null;
+}
+
+static partial class Library
+{
+
+	#region Common
+
+	public static void Swap<T>(ref T a, ref T b)
+	{
+		var tmp = a;
+		a = b;
+		b = tmp;
+	}
+
+	public static void Clear<T>(T[] t, T value = default(T))
+	{
+		for (int i = 0; i < t.Length; i++)
+			t[i] = value;
+	}
+
+	public static int BinarySearch<T>(T[] array, T value, bool upper = false)
+		where T : IComparable<T>
+	{
+		int left = 0;
+		int right = array.Length - 1;
+
+		while (left <= right)
+		{
+			int mid = left + (right - left) / 2;
+			int cmp = value.CompareTo(array[mid]);
+			if (cmp > 0 || cmp == 0 && upper)
+				left = mid + 1;
+			else
+				right = mid - 1;
+		}
+		return left;
+	}
+
+	#endregion
+
 	#region  Input
 	static System.IO.Stream inputStream;
 	static int inputIndex, bytesRead;
@@ -197,39 +213,39 @@ public static class FastIO
 		return list;
 	}
 
-	public static int Ni()
-	{
-		var c = SkipSpaces();
-		bool neg = c == '-';
-		if (neg) { c = Read(); }
+    public static int Ni()
+    {
+        var c = SkipSpaces();
+        bool neg = c == '-';
+        if (neg) { c = Read(); }
 
-		int number = c - '0';
-		while (true)
-		{
-			var d = Read() - '0';
-			if (unchecked((uint)d > 9)) break;
-			number = number * 10 + d;
-			if (number < 0) throw new FormatException();
-		}
+        int number = c - '0';
+        while (true)
+        {
+            var d = Read() - '0';
+            if (unchecked((uint)d > 9)) break;
+            number = number * 10 + d;
+	        if (number < 0) throw new FormatException();
+        }
+        return neg ? -number : number;
+    }
+
+    public static long Nl()
+    {
+        var c = SkipSpaces();
+        bool neg = c=='-';
+        if (neg) { c = Read(); }
+
+        long number = c - '0';
+        while (true)
+        {
+            var d = Read() - '0';
+            if (unchecked((uint)d > 9)) break;
+            number = number * 10 + d;
+	        if (number < 0) throw new FormatException();
+        }
 		return neg ? -number : number;
-	}
-
-	public static long Nl()
-	{
-		var c = SkipSpaces();
-		bool neg = c == '-';
-		if (neg) { c = Read(); }
-
-		long number = c - '0';
-		while (true)
-		{
-			var d = Read() - '0';
-			if (unchecked((uint)d > 9)) break;
-			number = number * 10 + d;
-			if (number < 0) throw new FormatException();
-		}
-		return neg ? -number : number;
-	}
+    }
 
 	public static char[] Nc(int n)
 	{
@@ -261,7 +277,7 @@ public static class FastIO
 	public static int SkipSpaces()
 	{
 		int c;
-		do c = Read(); while ((uint)c - 33 >= (127 - 33));
+		do c = Read(); while (unchecked((uint)c - 33 >= (127 - 33)));
 		return c;
 	}
 	#endregion
@@ -365,30 +381,21 @@ public static class FastIO
 	}
 
 	#endregion
+
 }
 
-public static class Parameters
+
+public class Program
 {
-#if DEBUG
-	public const bool Verbose = true;
-#else
-	public const bool Verbose = false;
-#endif
-}
-
-class CaideConstants {
-    public const string InputFile = null;
-    public const string OutputFile = null;
-}
-public class Program {
-    public static void Main(string[] args)
-    {
-        Solution solution = new Solution();
-        solution.solve(Console.OpenStandardInput(), Console.OpenStandardOutput());
-
+	public static void Main(string[] args)
+	{
+		InitInput(Console.OpenStandardInput());
+		InitOutput(Console.OpenStandardOutput());
+		Solution solution = new Solution();
+		solution.solve();
+		Flush();
 #if DEBUG
 		Console.Error.WriteLine(System.Diagnostics.Process.GetCurrentProcess().TotalProcessorTime);
 #endif
 	}
 }
-
