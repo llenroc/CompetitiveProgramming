@@ -1,0 +1,207 @@
+# 1 MultiplesOf3And5.cs
+# 2 Even Fibonacci numbers.cs
+Fibonacci
+# 3 Largest prime factor.cs
+Primes
+# 4 Largest palindrome product.cs
+Palindromes
+# 5 Smallest multiple.cs
+# 6 Sum square difference.cs
+# 7 10001st prime.cs
+Primes
+# 8 Largest product in a series.cs
+# 9 Special Pythagorean triplet.cs
+Pythagorean
+#10. Summation of primes.cs
+Primes
+#11. Largest product in a grid.cs
+#12. Highly divisible triangular number.cs
+#13. Large sum.cs
+#14. Longest Collatz sequence.cs
+Collatz
+#15. Lattice paths.cs
+#16 Power digit sum.cs
+#17 Number to Words.cs
+#18 Maximum path sum I.cpp
+#19 Counting Sundays.cs
+Dates
+#20 Factorial digit sum.cs
+Factorials
+#21 Amicable numbers.cs
+#22 Names scores.cs
+#23 Non-abundant sums.cs
+#24 Lexicographic permutations.cs
+Permutations
+#25 N-digit Fibonacci number.cs
+Fibonacci
+#26 Reciprocal cycles.cs
+#27 Quadratic primes.cs
+Primes
+#28 Number spiral diagonals.cs
+#29 Distinct powers.cs
+#30 Digit Nth powers.cs
+#31 Coin sums.cs
+#32 Pandigital products.cs
+#33 Digit canceling fractions.cs
+#34 Digit factorials.cs
+Factorials
+#35 Circular primes.cs
+Primes
+#36 Double-base palindromes.cs
+Palindromes
+#37 Truncatable primes.cs
+Primes
+#38 Pandigital multiples.cs
+Pandigitals
+#39 Integer right triangles.cs
+#40 Champernowne's .cs
+#41 Pandigital prime.cs
+Pandigitals
+Primes
+#42 Coded triangle numbers.cs
+#43 Sub-string divisibility.cs
+#44 Pentagon numbers.cs
+#45 Triangular, pentagonal, and hexagonal.cs
+#46 Goldbach's other conjecture.cs
+#47 Distinct primes factors.cs
+#48 Self powers.cs
+#49 Prime permutations.cs
+#50 Consecutive prime sum.cs
+#51 Prime digit replacements.cs
+#52 Permuted multiples.cs
+#53 Combinatoric selections.cs
+#54 Poker hands.cs
+#55 Lychrel numbers.cs
+#56 Powerful digit sum.cs
+#57 Square root convergents.cs
+Convergents
+Roots
+#58 Spiral primes.cs
+Primes
+MillerRabin
+#59 XOR decryption.cs
+#60 Prime pair sets.cs
+#61 Cyclical figurate numbers.cs
+#62 Cubic permutations.cs
+#63 Powerful digit counts.cs
+#64 Odd period square roots.cs
+#65 Convergents of e.cs
+Convergents
+#66 Diophantine equation.cs
+Diophantine
+Pell
+#67 Maximum path sum II.cpp
+#68 Magic N-gon ring.cs
+#69 Totient maximum.cs
+Totient
+#70 Totient permutation.cs
+Totient
+#71 Ordered fractions.cs
+Fractions
+#72 Counting fractions.cs
+Fractions
+#73 Counting fractions in a range.cs
+Fractions
+#74 Digit factorial chains.cs
+Factorials
+#75 Singular integer right triangles.cs
+Pythagorean
+#76 Counting summations.cs
+Partition
+#77 Prime summations.cs
+#78 Coin partitions.cs
+Partition
+#79 Passcode derivation.cs
+#80 Square root digital expansion.cs
+Roots
+#80 Square root digital expansion.java
+#81 Path sum two ways.cs
+#82 Path sum three ways.cs
+#83 Path sum four ways.cs
+#84 Monopoly odds.txt
+MarkovModel
+#85 Counting rectangles.cs
+#86 Cuboid route.cs
+Pythagorean
+#87 Prime power triples.cs
+#88 Product-sum numbers.cs
+#89 Roman numerals.cs
+#90 Cube digit pairs.cs
+#91 Right triangles with integer coordinates.cs
+#92 Square digit chains.cs
+#93 Arithmetic expressions.cs
+#94 Almost equilateral triangles.cs
+#95 Amicable chains.cs
+#96 Su Doku.cs
+#97 Large non-Mersenne prime.cs
+#98 Anagramic squares.cs
+#99 Largest exponential.cs
+#101 Optimum polynomial.cs
+Newton
+#102 Triangle containment.cs
+Triangle
+#103 Special subset sums optimum.cs
+#104 Pandigital Fibonacci ends.cs
+Fibonacci
+#105 Special subset sums testing.cs
+#106 Special subset sums meta-testing.cs
+#107 Minimal network.cs
+#108 Diophantine reciprocals.cs
+Diophantine
+#109 Darts.cs
+Matrix
+#110 Diophantine reciprocals II.cs
+Diophantine
+#111 Primes with runs.cs
+#112 Bouncy numbers.cs
+Bouncy
+#113 Non-bouncy numbers.cs
+Bouncy
+#114 Counting block combinations I.cs
+Matrix
+#115 Counting block combinations II.cs
+Fibonacci
+Matrix
+#116 Red, green or blue tiles.cs
+#117 Red, green, and blue tiles.cs
+#118 Pandigital prime sets.cs
+#119 Digit power sum.cs
+#123 Prime square remainders.cs
+#124 Ordered radicals.cs
+#125 Palindromic sums.cs
+#134 Prime pair connection.cs
+#137 Fibonacci golden nuggets.cs
+#138 Special isosceles triangles.cs
+#139 Pythagorean tiles.cs
+#142 Perfect Square Collection.cs
+#146 Investigating a Prime Pattern.cs
+#147 Rectangles in cross-hatched grids.cs
+#149 Searching for a maximum-sum subsequence.cs
+#150 Searching a triangular array for a sub-triangle having minimum-sum..cs
+#153 Investigating Gaussian Integers.cs
+#155 Counting Capacitor Circuits.cs
+#157 Solving the diophantine equation 1a +1b = p10^n.cs
+Diophantine
+#159 Digital root sums of factorisations.cs
+#162 Hexadecimal numbers.cs
+#163 Cross-hatched triangles.cs
+#164 Numbers for which no three consecutive digits have a sum greater than a given value.cs
+#165 Intersections.cs
+#169 Exploring the number of different ways a number can be expressed as a sum of powers of 2.cs
+#171 Finding numbers for which the sum of the squares of the digits is a square.cs
+#172 Investigating numbers with few repeated digits - 2.cs
+#172 Investigating numbers with few repeated digits - 3.cs
+#172 Investigating numbers with few repeated digits.cs
+#172 Investigating numbers with few repeated digits.java
+#173 Using up to one million tiles how many different hollow square laminae can be formed.cs
+Diophantine
+#174 Counting the number of hollow square laminae that can form one, two, three, ... distinct arrangements.cs
+Diophantine
+#176 Rectangular triangles that share a cathetus.cs
+#178 Step Numbers.cs
+#179 Consecutive positive divisors.cs
+#183 Maximum product of parts.cs
+#186 Connectedness of a network.cs
+#187 Semiprimes.cs
+#188 The hyperexponentiation of a number.cs
+#191 Prize Strings.cs

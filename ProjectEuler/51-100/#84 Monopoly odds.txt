@@ -1,0 +1,540 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.IO;
+using System.Text;
+using static System.Array;
+using static System.Math;
+using static Library;
+using T = System.Double;
+
+class Solution
+{
+	// public const int MOD = 1000000007;
+
+	private static string[] squares =
+	{
+		"GO", "A1", "CC1", "A2", "T1", "R1", "B1", "CH1", "B2", "B3",
+		"JAIL", "C1", "U1", "C2", "C3", "R2", "D1", "CC2", "D2", "D3",
+		"FP", "E1", "CH2", "E2", "E3", "R3", "F1", "F2", "U2", "F3",
+		"G2J", "G1", "G2", "CC3", "G3", "R4", "CH3", "H1","T2","H2",
+	};
+
+	private int n;
+	private int k;
+
+	public void solve()
+	{
+		n = Ni();
+		k = Ni();
+
+		var m = new double[40, 40];
+		var probs = new double[2*n+1];
+
+		for (int i = 1; i <= n; i++)
+			for (int j = 1; j <= n; j++)
+				probs[i + j]++;
+
+//		for (int i = 1; i <= n; i++)
+//			for (int j = 1; j <= n; j++)
+//				probs[i + j] /= n*n;
+
+		var dict = new Dictionary<string, int>();
+		for (int i = 0; i < squares.Length; i++)
+			dict[squares[i]] = i;
+
+
+		int go = 0;
+		int g2j = dict["G2J"];
+		int jail = dict["JAIL"];
+
+		for (int i = 0; i < squares.Length; i++)
+		{
+			var sq = squares[i];
+
+			for (int j = 2; j <= 2*n; j++)
+			{
+				var i2 = (i + j) % squares.Length;
+				var p = probs[j];
+
+				Backtrack:
+				if (i2 == g2j) i2 = jail;
+				var sq2 = squares[i2];
+
+				switch (sq2)
+				{
+					case "CC1":
+					case "CC2":
+					case "CC3":
+						m[i, i2] += 14 * p / 16;
+						m[i, jail] += p / 16;
+						m[i, go] += p / 16;
+						break;
+					case "CH1":
+					case "CH2":
+					case "CH3":
+						m[i, i2] += 6 * p / 16;
+						m[i, jail] += p / 16;
+						m[i, go] += p / 16;
+						m[i, dict["C1"]] += p / 16;
+						m[i, dict["E3"]] += p / 16;
+						m[i, dict["H2"]] += p / 16;
+						m[i, dict["R1"]] += p / 16;
+						m[i, Next(i2, 'R')] += 2 * p / 16;
+						m[i, Next(i2, 'U')] += p / 16;
+						p /= 16;
+						i2 -= 3;
+						goto Backtrack;
+					default:
+						m[i, i2] += p;
+						break;
+				}
+			}
+		}
+
+
+
+
+
+		m = Transpose(m);
+		
+		for (int c = 0; c < squares.Length; c++)
+		{
+			double sum = 0;
+			for (int r = 0; r < squares.Length; r++)
+				sum += m[r, c];
+			for (int r = 0; r < squares.Length; r++)
+				m[r, c] /= sum;
+		}
+
+
+		//var m2 = Pow(m, 1<<10);
+		var m2 = Pow(m, 1<<10);
+
+		Console.Error.WriteLine("BEFORE");
+		Console.Error.WriteLine(Text(m));
+
+		Console.Error.WriteLine("\nAFTER");
+		Console.Error.WriteLine(Text(m2));
+
+		var result = squares.ToArray();
+		Console.Error.WriteLine("BEFORE: " + string.Join(" ", result));
+		Sort(result, (a,b)=>-m2[dict[a],0].CompareTo(m2[dict[b],0]));
+		Console.Error.WriteLine("AFTER: " + string.Join(" ", result));
+		WriteLine(string.Join(" ", result.Take(k)));
+	}
+
+	public static string Text(T[,] mat)
+	{
+		StringBuilder sb = new StringBuilder();
+		if (mat == null)
+			return null;
+
+		int n = mat.GetLength(0);
+		int m = mat.GetLength(1);
+
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				if (j > 0) sb.Append(' ');
+				sb.Append(mat[i, j].ToString("G3"));
+			}
+			sb.AppendLine();
+		}
+
+		return sb.ToString();
+	}
+
+	public static T[,] Transpose(T[,] a, T[,] result = null)
+	{
+		int n = a.GetLength(0);
+		int m = a.GetLength(1);
+		if (result == null) result = (T[,]) a.Clone();
+		for (int i = 0; i < n; i++)
+		for (int j = i + 1; j < m; j++)
+		{
+			// Supports inplace transpose
+			T tmp = result[i, j];
+			result[i, j] = result[j, i];
+			result[j, i] = tmp;
+		}
+		return result;
+	}
+
+
+	public static int Next(int i, char c)
+	{
+		while (true)
+		{
+			i = (i + 1) % squares.Length;
+			if (squares[i][0] == c)
+				return i;
+		}
+	}
+
+	public static T[,] Mult(T[,] a, T[,] b, T[,] c = null)
+	{
+		int arows = a.GetLength(0);
+		int bcols = b.GetLength(1);
+		if (c == null) c = new T[arows, bcols];
+
+		int mid = a.GetLength(1);
+		for (int i = 0; i < arows; i++)
+		for (int j = 0; j < bcols; j++)
+		{
+			c[i, j] = 0;
+			for (int k = 0; k < mid; k++)
+				c[i, j] = c[i, j] + a[i, k] * b[k, j];
+		}
+
+		return c;
+	}
+
+	public static T[] MultVector(T[,] a, T[] b, T[] c)
+	{
+		int n = a.GetLength(0);
+		int m = a.GetLength(1);
+		if (c == null) c = new T[n];
+
+		for (int i = 0; i < n; i++)
+		{
+			T t = 0;
+			for (int k = 0; k < m; k++)
+				t += a[i, k] * b[k];
+			c[i] = t;
+		}
+
+		return c;
+	}
+
+
+	public static T[,] Pow(T[,] a, int p)
+	{
+		int n = a.GetLength(0);
+		var tmp = new T[n, n];
+		var result = Diagonal(n);
+		var b = Clone(a);
+
+		while (p > 0)
+		{
+			if ((p & 1) != 0)
+			{
+				Mult(result, b, tmp);
+				Assign(result, tmp);
+			}
+			p >>= 1;
+			Mult(b, b, tmp);
+			Assign(b, tmp);
+		}
+		return result;
+	}
+
+	#region Construction
+
+	public static T[,] Diagonal(int n, T d = 1)
+	{
+		var id = new T[n, n];
+		for (int i = 0; i < n; i++)
+			id[i, i] = d;
+		return id;
+	}
+
+	public static T[,] Clone(T[,] m)
+	{
+		return (T[,])m.Clone();
+	}
+
+	public static void Assign(T[,] dest, T[,] src)
+	{
+		Array.Copy(src, dest, src.Length);
+	}
+
+	#endregion
+}
+
+
+class CaideConstants {
+    public const string InputFile = null;
+    public const string OutputFile = null;
+}
+
+static partial class Library
+{
+
+	#region Common
+
+	public static void Swap<T>(ref T a, ref T b)
+	{
+		var tmp = a;
+		a = b;
+		b = tmp;
+	}
+
+	public static void Clear<T>(T[] t, T value = default(T))
+	{
+		for (int i = 0; i < t.Length; i++)
+			t[i] = value;
+	}
+
+	public static int BinarySearch<T>(T[] array, T value, int left, int right, bool upper = false)
+		where T : IComparable<T>
+	{
+		while (left <= right)
+		{
+			int mid = left + (right - left) / 2;
+			int cmp = value.CompareTo(array[mid]);
+			if (cmp > 0 || cmp == 0 && upper)
+				left = mid + 1;
+			else
+				right = mid - 1;
+		}
+		return left;
+	}
+
+	#endregion
+
+	#region  Input
+	static System.IO.Stream inputStream;
+	static int inputIndex, bytesRead;
+	static byte[] inputBuffer;
+	static System.Text.StringBuilder builder;
+	const int MonoBufferSize = 4096;
+
+	public static void InitInput(System.IO.Stream input = null, int stringCapacity = 16)
+	{
+		builder = new System.Text.StringBuilder(stringCapacity);
+		inputStream = input ?? Console.OpenStandardInput();
+		inputIndex = bytesRead = 0;
+		inputBuffer = new byte[MonoBufferSize];
+	}
+
+	static void ReadMore()
+	{
+		inputIndex = 0;
+		bytesRead = inputStream.Read(inputBuffer, 0, inputBuffer.Length);
+		if (bytesRead <= 0) inputBuffer[0] = 32;
+	}
+
+	public static int Read()
+	{
+		if (inputIndex >= bytesRead) ReadMore();
+		return inputBuffer[inputIndex++];
+	}
+
+	public static T[] N<T>(int n, Func<T> func)
+	{
+		var list = new T[n];
+		for (int i = 0; i < n; i++) list[i] = func();
+		return list;
+	}
+
+	public static int[] Ni(int n)
+	{
+		var list = new int[n];
+		for (int i = 0; i < n; i++) list[i] = Ni();
+		return list;
+	}
+
+	public static long[] Nl(int n)
+	{
+		var list = new long[n];
+		for (int i = 0; i < n; i++) list[i] = Nl();
+		return list;
+	}
+
+	public static string[] Ns(int n)
+	{
+		var list = new string[n];
+		for (int i = 0; i < n; i++) list[i] = Ns();
+		return list;
+	}
+
+    public static int Ni()
+    {
+        var c = SkipSpaces();
+        bool neg = c == '-';
+        if (neg) { c = Read(); }
+
+        int number = c - '0';
+        while (true)
+        {
+            var d = Read() - '0';
+            if ((uint)d > 9) break;
+            number = number * 10 + d;
+	        if (number < 0) throw new FormatException();
+        }
+        return neg ? -number : number;
+    }
+
+    public static long Nl()
+    {
+        var c = SkipSpaces();
+        bool neg = c=='-';
+        if (neg) { c = Read(); }
+
+        long number = c - '0';
+        while (true)
+        {
+            var d = Read() - '0';
+            if ((uint)d > 9) break;
+            number = number * 10 + d;
+	        if (number < 0) throw new FormatException();
+        }
+		return neg ? -number : number;
+    }
+
+	public static char[] Nc(int n)
+	{
+		var list = new char[n];
+		for (int i = 0, c = SkipSpaces(); i < n; i++, c = Read()) list[i] = (char)c;
+		return list;
+	}
+
+	public static byte[] Nb(int n)
+	{
+		var list = new byte[n];
+		for (int i = 0, c = SkipSpaces(); i < n; i++, c = Read()) list[i] = (byte)c;
+		return list;
+	}
+
+	public static string Ns()
+	{
+		var c = SkipSpaces();
+		builder.Clear();
+		while (true)
+		{
+			if ((uint)c - 33 >= (127 - 33)) break;
+			builder.Append((char)c);
+			c = Read();
+		}
+		return builder.ToString();
+	}
+
+	public static int SkipSpaces()
+	{
+		int c;
+		do c = Read(); while ((uint)c - 33 >= (127 - 33));
+		return c;
+	}
+	#endregion
+
+	#region Output
+
+	static System.IO.Stream outputStream;
+	static byte[] outputBuffer;
+	static int outputIndex;
+
+	public static void InitOutput(System.IO.Stream output = null)
+	{
+		outputStream = output ?? Console.OpenStandardOutput();
+		outputIndex = 0;
+		outputBuffer = new byte[65535];
+		AppDomain.CurrentDomain.ProcessExit += delegate { Flush(); };
+	}
+
+	public static void WriteLine(object obj = null)
+	{
+		Write(obj);
+		Write('\n');
+	}
+
+	public static void WriteLine(long number)
+	{
+		Write(number);
+		Write('\n');
+	}
+
+	public static void Write(long signedNumber)
+	{
+		ulong number = (ulong)signedNumber;
+		if (signedNumber < 0)
+		{
+			Write('-');
+			number = (ulong)(-signedNumber);
+		}
+
+		Reserve(20 + 1); // 20 digits + 1 extra
+		int left = outputIndex;
+		do
+		{
+			outputBuffer[outputIndex++] = (byte)('0' + number % 10);
+			number /= 10;
+		}
+		while (number > 0);
+
+		int right = outputIndex - 1;
+		while (left < right)
+		{
+			byte tmp = outputBuffer[left];
+			outputBuffer[left++] = outputBuffer[right];
+			outputBuffer[right--] = tmp;
+		}
+	}
+
+	public static void Write(object obj)
+	{
+		if (obj == null) return;
+
+		var s = obj.ToString();
+		Reserve(s.Length);
+		for (int i = 0; i < s.Length; i++)
+			outputBuffer[outputIndex++] = (byte)s[i];
+	}
+
+	public static void Write(char c)
+	{
+		Reserve(1);
+		outputBuffer[outputIndex++] = (byte)c;
+	}
+
+	public static void Write(byte[] array, int count)
+	{
+		Reserve(count);
+		Array.Copy(array, 0, outputBuffer, outputIndex, count);
+		outputIndex += count;
+	}
+
+	static void Reserve(int n)
+	{
+		if (outputIndex + n <= outputBuffer.Length)
+			return;
+
+		Dump();
+		if (n > outputBuffer.Length)
+			Array.Resize(ref outputBuffer, Math.Max(outputBuffer.Length * 2, n));
+	}
+
+	static void Dump()
+	{
+		outputStream.Write(outputBuffer, 0, outputIndex);
+		outputIndex = 0;
+	}
+
+	public static void Flush()
+	{
+		Dump();
+		outputStream.Flush();
+	}
+
+	#endregion
+
+}
+
+
+public class Program
+{
+	public static void Main(string[] args)
+	{
+		InitInput(Console.OpenStandardInput());
+		InitOutput(Console.OpenStandardOutput());
+		Solution solution = new Solution();
+		solution.solve();
+		Flush();
+#if DEBUG
+		Console.Error.WriteLine(System.Diagnostics.Process.GetCurrentProcess().TotalProcessorTime);
+#endif
+	}
+}
