@@ -3,7 +3,6 @@
 	using System;
 	using System.Collections.Generic;
 	using static System.Math;
-	using static System.Console;
 	using static FastIO;
 
 	public static class Solution
@@ -16,7 +15,6 @@
 
 		public static void Main()
 		{
-			InitIO();
 			int n = Ni();
 			int k = Ni();
 			x = new int[n + 1];
@@ -79,58 +77,5 @@
 		}
 	}
 
-	public static class FastIO
-	{
-		static System.IO.Stream stream;
-		static int idx, bytesRead;
-		static byte[] buffer;
-		const int MonoBufferSize = 4096;
-
-		public static void InitIO(
-			int stringCapacity = 16,
-			System.IO.Stream input = null)
-		{
-			stream = input ?? Console.OpenStandardInput();
-			idx = bytesRead = 0;
-			buffer = new byte[MonoBufferSize];
-		}
-
-		static void ReadMore()
-		{
-			idx = 0;
-			bytesRead = stream.Read(buffer, 0, buffer.Length);
-			if (bytesRead <= 0) buffer[0] = 32;
-		}
-
-		public static int Read()
-		{
-			if (idx >= bytesRead) ReadMore();
-			return buffer[idx++];
-		}
-
-
-		public static int Ni()
-		{
-			var c = SkipSpaces();
-			bool neg = c == '-';
-			if (neg) { c = Read(); }
-
-			int number = c - '0';
-			while (true)
-			{
-				var d = Read() - '0';
-				if ((uint)d > 9) break;
-				number = number * 10 + d;
-			}
-			return neg ? -number : number;
-		}
-
-		public static int SkipSpaces()
-		{
-			int c;
-			do c = Read(); while ((uint)c - 33 >= (127 - 33));
-			return c;
-		}
-	}
 
 }

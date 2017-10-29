@@ -6,7 +6,7 @@ namespace HackerRank.WeekOfCode33.PalindromicTable
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
-	using static FastInput;
+	using static FastIO;
 	class Solution
 	{
 
@@ -18,7 +18,6 @@ namespace HackerRank.WeekOfCode33.PalindromicTable
 
 		void Run()
 		{
-			InitIO();
 			int n = Ni(), m = Ni();
 			bool swap = false;
 

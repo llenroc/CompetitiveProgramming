@@ -28,7 +28,6 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 
 		public static void Main()
 		{
-			InitIO();
 			var sol = new Solution();
 			sol.Run();
 		}
@@ -261,70 +260,6 @@ namespace HackerRank.WeekOfCode31.CollidingCircles
 					? Comb(n, n - k)
 					: Fact(n) / Fact(k) / Fact(n - k));
 		}
-	}
-
-	public static class FastIO
-	{
-		static Stream _stream;
-		static int _idx, _bytesRead;
-		static byte[] _buffer;
-
-		public static void InitIO(
-			int bufferSize = 1 << 20,
-			Stream input = null)
-		{
-			_stream = input ?? OpenStandardInput();
-			_idx = _bytesRead = 0;
-			_buffer = new byte[bufferSize];
-		}
-
-
-		static void ReadMore()
-		{
-			_idx = 0;
-			_bytesRead = _stream.Read(_buffer, 0, _buffer.Length);
-			if (_bytesRead <= 0) _buffer[0] = 32;
-		}
-
-		public static int Read()
-		{
-			if (_idx >= _bytesRead) ReadMore();
-			return _buffer[_idx++];
-		}
-
-		public static int[] Ni(int n)
-		{
-			var list = new int[n];
-			for (int i = 0; i < n; i++) list[i] = Ni();
-			return list;
-		}
-
-		public static int Ni()
-		{
-			var c = SkipSpaces();
-			bool neg = c == '-';
-			if (neg)
-			{
-				c = Read();
-			}
-
-			int number = c - '0';
-			while (true)
-			{
-				var d = Read() - '0';
-				if ((uint)d > 9) break;
-				number = number * 10 + d;
-			}
-			return neg ? -number : number;
-		}
-
-		public static int SkipSpaces()
-		{
-			int c;
-			do c = Read(); while ((uint)c - 33 >= (127 - 33));
-			return c;
-		}
-
 	}
 
 	public static class Parameters

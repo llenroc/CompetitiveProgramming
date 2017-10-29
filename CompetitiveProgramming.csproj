@@ -246,12 +246,6 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Documents\Dev\Projects\SoftPerson.Core\SoftPerson.Core.csproj">
-      <Project>{bd46e1f4-0f53-450a-89d4-e6bc56489711}</Project>
-      <Name>SoftPerson.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Contests\" />
     <Folder Include="HackerRank\Companies\OpenBracket\" />
     <Folder Include="Languages\" />

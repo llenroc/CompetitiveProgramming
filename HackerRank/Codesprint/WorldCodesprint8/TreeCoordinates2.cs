@@ -1,23 +1,23 @@
-﻿
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using static FastIO;
+
 namespace HackerRank.WorldCodeSprint8
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using static FastIO;
+
 	class TreeCoordinates2
 	{
 
 		static void Main(String[] args)
 		{
 			LaunchTimer();
-			InitIO();
 			int n = Ni();
 			int m = Ni();
 			var edges = N(n - 1, () => Ni(2));
-			var points = NL(m, () => Ni(2));
+			var points = N(m, () => Ni(2)).ToList();
 
 			var result = new TreeCoordinates2(edges, points, n).Solve();
 			Console.WriteLine(result);
@@ -299,140 +299,4 @@ namespace HackerRank.WorldCodeSprint8
 	}
 
 
-	public static class FastIO
-	{
-		static System.IO.Stream stream;
-		static int idx, bytesRead;
-		static byte[] buffer;
-		static System.Text.StringBuilder builder;
-
-		public static void InitIO(
-			int stringCapacity = 16,
-			int bufferSize = 1 << 20,
-			System.IO.Stream input = null)
-		{
-			builder = new System.Text.StringBuilder(stringCapacity);
-			stream = input ?? Console.OpenStandardInput();
-			idx = bytesRead = 0;
-			buffer = new byte[bufferSize];
-		}
-
-
-		static void ReadMore()
-		{
-			idx = 0;
-			bytesRead = stream.Read(buffer, 0, buffer.Length);
-			if (bytesRead <= 0) buffer[0] = 32;
-		}
-
-		public static int Read()
-		{
-			if (idx >= bytesRead) ReadMore();
-			return buffer[idx++];
-		}
-
-
-		public static T[] N<T>(int n, Func<T> func)
-		{
-			var list = new T[n];
-			for (int i = 0; i < n; i++) list[i] = func();
-			return list;
-		}
-
-		public static List<T> NL<T>(int n, Func<T> func)
-		{
-			var list = new List<T>(n);
-			for (int i = 0; i < n; i++) list.Add(func());
-			return list;
-		}
-
-
-
-		public static int[] Ni(int n)
-		{
-			var list = new int[n];
-			for (int i = 0; i < n; i++) list[i] = Ni();
-			return list;
-		}
-
-		public static long[] Nl(int n)
-		{
-			var list = new long[n];
-			for (int i = 0; i < n; i++) list[i] = Nl();
-			return list;
-		}
-
-		public static string[] Ns(int n)
-		{
-			var list = new string[n];
-			for (int i = 0; i < n; i++) list[i] = Ns();
-			return list;
-		}
-
-		public static int Ni()
-		{
-			var c = SkipSpaces();
-			bool neg = c == '-';
-			if (neg) { c = Read(); }
-
-			int number = c - '0';
-			while (true)
-			{
-				var d = Read() - '0';
-				if ((uint)d > 9) break;
-				number = number * 10 + d;
-			}
-			return neg ? -number : number;
-		}
-
-		public static long Nl()
-		{
-			var c = SkipSpaces();
-			bool neg = c == '-';
-			if (neg) { c = Read(); }
-
-			long number = c - '0';
-			while (true)
-			{
-				var d = Read() - '0';
-				if ((uint)d > 9) break;
-				number = number * 10 + d;
-			}
-			return neg ? -number : number;
-		}
-
-		public static char[] Nc(int n)
-		{
-			var list = new char[n];
-			for (int i = 0, c = SkipSpaces(); i < n; i++, c = Read()) list[i] = (char)c;
-			return list;
-		}
-
-		public static byte[] Nb(int n)
-		{
-			var list = new byte[n];
-			for (int i = 0, c = SkipSpaces(); i < n; i++, c = Read()) list[i] = (byte)c;
-			return list;
-		}
-
-		public static string Ns()
-		{
-			var c = SkipSpaces();
-			builder.Clear();
-			while (true)
-			{
-				if ((uint)c - 33 >= (127 - 33)) break;
-				builder.Append((char)c);
-				c = Read();
-			}
-			return builder.ToString();
-		}
-
-		public static int SkipSpaces()
-		{
-			int c;
-			do c = Read(); while ((uint)c - 33 >= (127 - 33));
-			return c;
-		}
-	}
 }

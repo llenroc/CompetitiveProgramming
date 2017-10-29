@@ -1,13 +1,16 @@
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using static Library;
+using static FastIO;
+
 namespace HackerRank.WeekOfCode32.BallsAndBoxes
 {
 	// https://www.hackerrank.com/contests/w32/challenges/balls-and-boxes
 
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.IO;
-	using System.Linq;
-	using static Solution.FastIO;
 
 
 
@@ -23,10 +26,8 @@ namespace HackerRank.WeekOfCode32.BallsAndBoxes
 		int maxCandy;
 		int minCandy = 100;
 
-		public void solve(Stream input, Stream output)
+		public void solve()
 		{
-			InitInput(input);
-
 			n = Ni();
 			m = Ni();
 			A = Ni(n);
@@ -38,11 +39,9 @@ namespace HackerRank.WeekOfCode32.BallsAndBoxes
 
 			//TestSample();
 
-			long ans = solve();
+			long ans = solve2();
 
-			var writer = new StreamWriter(output);
-			writer.WriteLine(ans);
-			writer.Flush();
+			WriteLine(ans);
 
 #if DEBUG
 			Console.Error.WriteLine(Process.GetCurrentProcess().TotalProcessorTime);
@@ -73,7 +72,7 @@ namespace HackerRank.WeekOfCode32.BallsAndBoxes
 			}
 		}
 
-		public long solve()
+		public long solve2()
 		{
 			// Add edge from start to each n color with color capacity
 			// Add edge from each n color to each m box with candies
@@ -244,115 +243,6 @@ namespace HackerRank.WeekOfCode32.BallsAndBoxes
 		}
 
 
-		public static class FastIO
-		{
-			#region  Input
-
-			static System.IO.Stream inputStream;
-			static int inputIndex, bytesRead;
-			static byte[] inputBuffer;
-			static System.Text.StringBuilder builder;
-			const int MonoBufferSize = 4096;
-
-			public static void InitInput(System.IO.Stream input = null, int stringCapacity = 16)
-			{
-				builder = new System.Text.StringBuilder(stringCapacity);
-				inputStream = input ?? Console.OpenStandardInput();
-				inputIndex = bytesRead = 0;
-				inputBuffer = new byte[MonoBufferSize];
-			}
-
-			static void ReadMore()
-			{
-				inputIndex = 0;
-				bytesRead = inputStream.Read(inputBuffer, 0, inputBuffer.Length);
-				if (bytesRead <= 0) inputBuffer[0] = 32;
-			}
-
-			public static int Read()
-			{
-				if (inputIndex >= bytesRead) ReadMore();
-				return inputBuffer[inputIndex++];
-			}
-
-
-			public static int[] Ni(int n)
-			{
-				var list = new int[n];
-				for (int i = 0; i < n; i++) list[i] = Ni();
-				return list;
-			}
-
-			public static int Ni()
-			{
-				var c = SkipSpaces();
-				bool neg = c == '-';
-				if (neg)
-				{
-					c = Read();
-				}
-
-				int number = c - '0';
-				while (true)
-				{
-					var d = Read() - '0';
-					if ((uint)d > 9) break;
-					number = number * 10 + d;
-				}
-				return neg ? -number : number;
-			}
-
-
-			public static string Ns()
-			{
-				var c = SkipSpaces();
-				builder.Clear();
-				while (true)
-				{
-					if ((uint)c - 33 >= (127 - 33)) break;
-					builder.Append((char)c);
-					c = Read();
-				}
-				return builder.ToString();
-			}
-
-			public static int SkipSpaces()
-			{
-				int c;
-				do c = Read(); while ((uint)c - 33 >= (127 - 33));
-				return c;
-			}
-
-			#endregion
-
-		}
-
-		public static class Parameters
-		{
-#if DEBUG
-			public const bool Verbose = true;
-#else
-	public const bool Verbose = false;
-#endif
-		}
-	}
-
-	class CaideConstants
-	{
-		public const string InputFile = null;
-		public const string OutputFile = null;
-	}
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
-			Solution solution = new Solution();
-			solution.solve(Console.OpenStandardInput(), Console.OpenStandardOutput());
-
-#if DEBUG
-			Console.Error.WriteLine(System.Diagnostics.Process.GetCurrentProcess().TotalProcessorTime);
-#endif
-		}
 	}
 
 
